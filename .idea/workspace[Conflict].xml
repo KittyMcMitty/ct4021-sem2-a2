@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="a_toolchain_test" targetName="gtest" />
+      <config projectName="a_toolchain_test" targetName="SomeClass" />
+      <config projectName="a_toolchain_test" targetName="gmock" />
+      <config projectName="a_toolchain_test" targetName="a_toolchain_test" />
+      <config projectName="a_toolchain_test" targetName="unit_tests" />
+      <config projectName="a_toolchain_test" targetName="gmock_main" />
+      <config projectName="a_toolchain_test" targetName="_arduino_lib_core" />
+      <config projectName="a_toolchain_test" targetName="gtest_main" />
+      <config projectName="a_toolchain_test" targetName="_arduino_lib_SomeClass" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" BUILD_OPTIONS="-- -j 10" />
+      <configuration PROFILE_NAME="Upload" CONFIG_NAME="Debug" GENERATION_OPTIONS="-DU_UPLOAD=TRUE -DCMAKE_TOOLCHAIN_FILE=Arduino-CMake-Toolchain/Arduino-toolchain.cmake" BUILD_OPTIONS="-- -j 10" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="68a28d0b-2e43-4de6-88a5-76bb907dcc81" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Arduino-CMake-Toolchain/.idea/Arduino-CMake-Toolchain.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Arduino-CMake-Toolchain/Examples/02_arduino_lib/.idea/02_arduino_lib.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arduino-CMake-Toolchain/Examples/02_arduino_lib/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Arduino-CMake-Toolchain/Examples/02_arduino_lib/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arduino-CMake-Toolchain/Examples/02_arduino_lib/arduino_lib.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Arduino-CMake-Toolchain/Examples/02_arduino_lib/arduino_lib.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arduino-CMake-Toolchain/Examples/02_arduino_lib/libraries/local_lib/library.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Arduino-CMake-Toolchain/Examples/02_arduino_lib/libraries/LocalLib/library.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arduino-CMake-Toolchain/Examples/02_arduino_lib/libraries/local_lib/local_lib.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Arduino-CMake-Toolchain/Examples/02_arduino_lib/libraries/LocalLib/LocalLib.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arduino-CMake-Toolchain/Examples/02_arduino_lib/libraries/local_lib/local_lib.h" beforeDir="false" afterPath="$PROJECT_DIR$/Arduino-CMake-Toolchain/Examples/02_arduino_lib/libraries/LocalLib/LocalLib.h" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/Arduino-CMake-Toolchain" />
+  </component>
+  <component name="ProjectId" id="1Zcw3CxL8SmO4F81PjuEA3XRJto" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="CMakeSettings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
+  </component>
+  <component name="RunManager" selected="CMake Application.unit_tests">
+    <configuration name="SomeClass" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="SomeClass" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="_arduino_lib_SomeClass" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="_arduino_lib_SomeClass" CONFIG_NAME="Upload">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="_arduino_lib_core" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="_arduino_lib_core" CONFIG_NAME="Upload">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="a_toolchain_test" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="a_toolchain_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="a_toolchain_test" RUN_TARGET_NAME="a_toolchain_test">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="gmock" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="gmock" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="gmock_main" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="gmock_main" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="gtest" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="gtest" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="gtest_main" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="gtest_main" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="unit_tests" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="unit_tests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="a_toolchain_test" RUN_TARGET_NAME="unit_tests">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="CMake Application.SomeClass" />
+      <item itemvalue="CMake Application._arduino_lib_SomeClass" />
+      <item itemvalue="CMake Application._arduino_lib_core" />
+      <item itemvalue="CMake Application.a_toolchain_test" />
+      <item itemvalue="CMake Application.gmock" />
+      <item itemvalue="CMake Application.gmock_main" />
+      <item itemvalue="CMake Application.gtest" />
+      <item itemvalue="CMake Application.gtest_main" />
+      <item itemvalue="CMake Application.unit_tests" />
+    </list>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="68a28d0b-2e43-4de6-88a5-76bb907dcc81" name="Default Changelist" comment="" />
+      <created>1585151488504</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1585151488504</updated>
+      <workItem from="1585151489908" duration="10729000" />
+      <workItem from="1585254752889" duration="215000" />
+      <workItem from="1585260054700" duration="169000" />
+      <workItem from="1585262005108" duration="11000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="341" y="249" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585152556451">
+      <screen x="0" y="23" width="1680" height="961" />
+    </state>
+    <state x="341" y="249" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1680.961@0.23.1680.961" timestamp="1585152556451" />
+    <state x="71" y="96" width="1257" height="722" key="SettingsEditor" timestamp="1585165766910">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="71" y="96" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1585165766910" />
+    <state x="71" y="111" width="1257" height="722" key="SettingsEditor/0.23.1680.961@0.23.1680.961" timestamp="1585157643752" />
+    <state x="973" y="552" key="com.intellij.ide.util.TipDialog" timestamp="1585260055703">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="973" y="552" key="com.intellij.ide.util.TipDialog/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1585260055703" />
+  </component>
+</project>
