@@ -3,14 +3,18 @@
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
       <config projectName="a_toolchain_test" targetName="a_toolchain_test" />
+      <config projectName="a_toolchain_test" targetName="_arduino_lib_Servo" />
+      <config projectName="a_toolchain_test" targetName="_arduino_lib_Radar" />
       <config projectName="a_toolchain_test" targetName="gmock_main" />
+      <config projectName="a_toolchain_test" targetName="gmock" />
+      <config projectName="a_toolchain_test" targetName="upload-a_toolchain_test" />
+      <config projectName="a_toolchain_test" targetName="gtest_main" />
+      <config projectName="a_toolchain_test" targetName="Radar" />
+      <config projectName="a_toolchain_test" targetName="_arduino_lib_LiquidCrystal" />
       <config projectName="a_toolchain_test" targetName="_arduino_lib_core" />
       <config projectName="a_toolchain_test" targetName="gtest" />
-      <config projectName="a_toolchain_test" targetName="SomeClass" />
       <config projectName="a_toolchain_test" targetName="unit_tests" />
-      <config projectName="a_toolchain_test" targetName="gmock" />
-      <config projectName="a_toolchain_test" targetName="_arduino_lib_SomeClass" />
-      <config projectName="a_toolchain_test" targetName="gtest_main" />
+      <config projectName="a_toolchain_test" targetName="_arduino_lib_Wire" />
     </generated>
   </component>
   <component name="CMakeSettings">
@@ -20,16 +24,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="68a28d0b-2e43-4de6-88a5-76bb907dcc81" name="Default Changelist" comment="Initial commit - working build system">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/a-toolchain-test.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace[Conflict].xml" afterDir="false" />
+    <list default="true" id="68a28d0b-2e43-4de6-88a5-76bb907dcc81" name="Default Changelist" comment="Radar unit tests finished.">
       <change afterPath="$PROJECT_DIR$/Arduino-CMake-Toolchain/.idea/.gitignore" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Arduino-CMake-Toolchain/.idea/Arduino-CMake-Toolchain.iml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Arduino-CMake-Toolchain/.idea/misc.xml" afterDir="false" />
@@ -235,19 +230,52 @@
       <change afterPath="$PROJECT_DIR$/Arduino-CMake-Toolchain/Platform/Arduino-Determine.cmake" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Arduino-CMake-Toolchain/Platform/Arduino.cmake" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Arduino-CMake-Toolchain/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libraries/Radar/radar.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libraries/Radar/radar.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libraries/SomeClass/SomeClass.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libraries/SomeClass/SomeClass.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libraries/SomeClass/library.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_test.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Arduino-CMake-Toolchain/Examples/02_arduino_lib/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Arduino-CMake-Toolchain/Examples/02_arduino_lib/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Arduino-CMake-Toolchain/Examples/02_arduino_lib/arduino_lib.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Arduino-CMake-Toolchain/Examples/02_arduino_lib/arduino_lib.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Arduino-CMake-Toolchain/Examples/02_arduino_lib/libraries/local_lib/library.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Arduino-CMake-Toolchain/Examples/02_arduino_lib/libraries/LocalLib/library.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Arduino-CMake-Toolchain/Examples/02_arduino_lib/libraries/local_lib/local_lib.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Arduino-CMake-Toolchain/Examples/02_arduino_lib/libraries/LocalLib/LocalLib.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Arduino-CMake-Toolchain/Examples/02_arduino_lib/libraries/local_lib/local_lib.h" beforeDir="false" afterPath="$PROJECT_DIR$/Arduino-CMake-Toolchain/Examples/02_arduino_lib/libraries/LocalLib/LocalLib.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/include/ArduinoInterface.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/LiquidCrystal/README.adoc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/LiquidCrystal/examples/Autoscroll/Autoscroll.ino" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/LiquidCrystal/examples/Blink/Blink.ino" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/LiquidCrystal/examples/Cursor/Cursor.ino" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/LiquidCrystal/examples/CustomCharacter/CustomCharacter.ino" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/LiquidCrystal/examples/Display/Display.ino" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/LiquidCrystal/examples/HelloWorld/HelloWorld.ino" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/LiquidCrystal/examples/Scroll/Scroll.ino" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/LiquidCrystal/examples/SerialDisplay/SerialDisplay.ino" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/LiquidCrystal/examples/TextDirection/TextDirection.ino" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/LiquidCrystal/examples/setCursor/setCursor.ino" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/LiquidCrystal/keywords.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/LiquidCrystal/library.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/LiquidCrystal/src/LiquidCrystal.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/LiquidCrystal/src/LiquidCrystal.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/Radar/library.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/Servo/README.adoc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/Servo/examples/Knob/Knob.ino" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/Servo/examples/Sweep/Sweep.ino" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/Servo/keywords.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/Servo/library.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/Servo/src/Servo.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/Servo/src/avr/Servo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/Servo/src/avr/ServoTimers.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/Servo/src/megaavr/Servo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/Servo/src/megaavr/ServoTimers.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/Servo/src/nrf52/Servo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/Servo/src/nrf52/ServoTimers.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/Servo/src/sam/Servo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/Servo/src/sam/ServoTimers.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/Servo/src/samd/Servo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/Servo/src/samd/ServoTimers.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/Servo/src/stm32f4/Servo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libraries/Servo/src/stm32f4/ServoTimers.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/test_radar.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libraries/Radar/radar.cc" beforeDir="false" afterPath="$PROJECT_DIR$/libraries/Radar/radar.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libraries/Radar/radar.h" beforeDir="false" afterPath="$PROJECT_DIR$/libraries/Radar/radar.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libraries/SomeClass/SomeClass.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/libraries/SomeClass/SomeClass.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/libraries/SomeClass/library.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_test.cpp" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -275,16 +303,18 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="TODO_SCOPE" value="Project Files" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="cf.advertisement.text.has.clang-format" value="true" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="CMakeSettings" />
+    <property name="settings.editor.selected.configurable" value="dynamic.analysis.tools.valgrind" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -292,42 +322,63 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.unit_tests">
-    <configuration name="SomeClass" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="SomeClass" CONFIG_NAME="Debug">
+    <configuration name="RadarTest.InitTest" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" temporary="true" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="unit_tests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="a_toolchain_test" RUN_TARGET_NAME="unit_tests" TEST_CLASS="RadarTest" TEST_METHOD="InitTest" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Radar" type="CMakeRunConfiguration" factoryName="Application" folderName="libs" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="Radar" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="_arduino_lib_SomeClass" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="_arduino_lib_SomeClass" CONFIG_NAME="Upload">
+    <configuration name="_arduino_lib_LiquidCrystal" type="CMakeRunConfiguration" factoryName="Application" folderName="libs" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="_arduino_lib_LiquidCrystal" CONFIG_NAME="Upload">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="_arduino_lib_core" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="_arduino_lib_core" CONFIG_NAME="Upload">
+    <configuration name="_arduino_lib_Radar" type="CMakeRunConfiguration" factoryName="Application" folderName="libs" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="_arduino_lib_Radar" CONFIG_NAME="Upload">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="a_toolchain_test" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="a_toolchain_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="a_toolchain_test" RUN_TARGET_NAME="a_toolchain_test">
+    <configuration name="_arduino_lib_Servo" type="CMakeRunConfiguration" factoryName="Application" folderName="libs" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="_arduino_lib_Servo" CONFIG_NAME="Upload">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="gmock" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="gmock" CONFIG_NAME="Debug">
+    <configuration name="_arduino_lib_Wire" type="CMakeRunConfiguration" factoryName="Application" folderName="libs" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="_arduino_lib_Wire" CONFIG_NAME="Upload">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="gmock_main" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="gmock_main" CONFIG_NAME="Debug">
+    <configuration name="_arduino_lib_core" type="CMakeRunConfiguration" factoryName="Application" folderName="libs" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="_arduino_lib_core" CONFIG_NAME="Upload">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="gtest" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="gtest" CONFIG_NAME="Debug">
+    <configuration name="a_toolchain_test" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="a_toolchain_test" CONFIG_NAME="Upload" RUN_TARGET_PROJECT_NAME="a_toolchain_test" RUN_TARGET_NAME="a_toolchain_test">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="gtest_main" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="gtest_main" CONFIG_NAME="Debug">
+    <configuration name="gmock" type="CMakeRunConfiguration" factoryName="Application" folderName="libs" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="gmock" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="gmock_main" type="CMakeRunConfiguration" factoryName="Application" folderName="libs" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="gmock_main" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="gtest" type="CMakeRunConfiguration" factoryName="Application" folderName="libs" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="gtest" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="gtest_main" type="CMakeRunConfiguration" factoryName="Application" folderName="libs" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="gtest_main" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -337,17 +388,32 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="upload-a_toolchain_test" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="upload-a_toolchain_test" CONFIG_NAME="Upload">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="CMake Application._arduino_lib_core" />
-      <item itemvalue="CMake Application._arduino_lib_SomeClass" />
-      <item itemvalue="CMake Application.a_toolchain_test" />
-      <item itemvalue="CMake Application.SomeClass" />
-      <item itemvalue="CMake Application.unit_tests" />
+      <item itemvalue="CMake Application._arduino_lib_LiquidCrystal" />
+      <item itemvalue="CMake Application._arduino_lib_Radar" />
+      <item itemvalue="CMake Application._arduino_lib_Servo" />
+      <item itemvalue="CMake Application._arduino_lib_Wire" />
+      <item itemvalue="CMake Application.Radar" />
       <item itemvalue="CMake Application.gmock" />
       <item itemvalue="CMake Application.gmock_main" />
       <item itemvalue="CMake Application.gtest" />
       <item itemvalue="CMake Application.gtest_main" />
+      <item itemvalue="CMake Application.unit_tests" />
+      <item itemvalue="CMake Application.upload-a_toolchain_test" />
+      <item itemvalue="CMake Application.a_toolchain_test" />
+      <item itemvalue="Google Test.RadarTest.InitTest" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Google Test.RadarTest.InitTest" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -362,8 +428,17 @@
       <workItem from="1585151489908" duration="10729000" />
       <workItem from="1585254752889" duration="215000" />
       <workItem from="1585260054700" duration="169000" />
-      <workItem from="1585320722543" duration="1433000" />
+      <workItem from="1585320722543" duration="17922000" />
+      <workItem from="1585343797311" duration="27875000" />
     </task>
+    <task id="LOCAL-00001" summary="Initial commit - working build system">
+      <created>1585322536792</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1585322536792</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -371,42 +446,79 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial commit - working build system" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial commit - working build system" />
+    <MESSAGE value="Radar unit tests finished." />
+    <option name="LAST_COMMIT_MESSAGE" value="Radar unit tests finished." />
   </component>
   <component name="WindowStateProjectService">
-    <state x="341" y="249" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585152556451">
-      <screen x="0" y="23" width="1680" height="961" />
+    <state x="289" y="385" key="#New_File_Extensions" timestamp="1585327258860">
+      <screen x="0" y="0" width="2560" height="1440" />
     </state>
+    <state x="289" y="385" key="#New_File_Extensions/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1585327258860" />
+    <state x="543" y="348" width="1048" height="667" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585339869421">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="543" y="348" width="1048" height="667" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1585339869421" />
     <state x="341" y="249" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1680.961@0.23.1680.961" timestamp="1585152556451" />
-    <state x="0" y="322" width="1772" height="795" key="CommitChangelistDialog2" timestamp="1585321988651">
+    <state x="211" y="110" width="1494" height="1172" key="CommitChangelistDialog2" timestamp="1585420395222">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state x="0" y="322" width="1772" height="795" key="CommitChangelistDialog2/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1585321988651" />
-    <state width="1095" height="423" key="GridCell.Tab.0.bottom" timestamp="1585321801915">
+    <state x="211" y="110" width="1494" height="1172" key="CommitChangelistDialog2/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1585420395222" />
+    <state x="0" y="109" key="DiffContextDialog" timestamp="1585420361113">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state width="1095" height="423" key="GridCell.Tab.0.bottom/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1585321801915" />
-    <state width="1095" height="423" key="GridCell.Tab.0.center" timestamp="1585321801913">
+    <state x="0" y="109" key="DiffContextDialog/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1585420361113" />
+    <state width="1873" height="277" key="GridCell.Tab.0.bottom" timestamp="1585420395303">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state width="1095" height="423" key="GridCell.Tab.0.center/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1585321801913" />
-    <state width="1095" height="423" key="GridCell.Tab.0.left" timestamp="1585321801911">
+    <state width="1873" height="277" key="GridCell.Tab.0.bottom/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1585420395303" />
+    <state width="1873" height="277" key="GridCell.Tab.0.center" timestamp="1585420395301">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state width="1095" height="423" key="GridCell.Tab.0.left/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1585321801911" />
-    <state width="1095" height="423" key="GridCell.Tab.0.right" timestamp="1585321801914">
+    <state width="1873" height="277" key="GridCell.Tab.0.center/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1585420395301" />
+    <state width="1873" height="277" key="GridCell.Tab.0.left" timestamp="1585420395301">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state width="1095" height="423" key="GridCell.Tab.0.right/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1585321801914" />
-    <state x="316" y="208" width="1257" height="722" key="SettingsEditor" timestamp="1585320769353">
+    <state width="1873" height="277" key="GridCell.Tab.0.left/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1585420395301" />
+    <state width="1873" height="277" key="GridCell.Tab.0.right" timestamp="1585420395302">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state width="1873" height="277" key="GridCell.Tab.0.right/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1585420395302" />
+    <state width="1568" height="477" key="GridCell.Tab.1.bottom" timestamp="1585419708176">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state width="1568" height="477" key="GridCell.Tab.1.bottom/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1585419708176" />
+    <state width="1568" height="477" key="GridCell.Tab.1.center" timestamp="1585419708173">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state width="1568" height="477" key="GridCell.Tab.1.center/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1585419708173" />
+    <state width="1568" height="477" key="GridCell.Tab.1.left" timestamp="1585419708171">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state width="1568" height="477" key="GridCell.Tab.1.left/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1585419708171" />
+    <state width="1568" height="477" key="GridCell.Tab.1.right" timestamp="1585419708174">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state width="1568" height="477" key="GridCell.Tab.1.right/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1585419708174" />
+    <state x="266" y="173" width="1257" height="722" key="SettingsEditor" timestamp="1585357444634">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state x="71" y="96" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1585165766910" />
-    <state x="316" y="208" key="SettingsEditor/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1585320769353" />
+    <state x="266" y="173" key="SettingsEditor/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1585357444634" />
     <state x="71" y="111" width="1257" height="722" key="SettingsEditor/0.23.1680.961@0.23.1680.961" timestamp="1585157643752" />
-    <state x="973" y="552" key="com.intellij.ide.util.TipDialog" timestamp="1585320735158">
+    <state x="973" y="552" key="com.intellij.ide.util.TipDialog" timestamp="1585343797619">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state x="973" y="552" key="com.intellij.ide.util.TipDialog/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1585320735158" />
+    <state x="973" y="552" key="com.intellij.ide.util.TipDialog/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1585343797619" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/include/ArduinoInterface.h</url>
+          <line>60</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

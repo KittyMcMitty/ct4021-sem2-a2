@@ -2,13 +2,11 @@
 #ifndef RADAR_H
 #define RADAR_H
 
-#ifdef UNIT_TEST
+#ifndef UNIT_TEST
 #include <Servo.h>
-#else
-#include <Servo.h>
-#endif
+#endif // UNIT_TEST
 
-
+#include <ArduinoInterface.h>
 
 #define SPEED_OF_SOUND 0.343 // speed of sound in mm/µs
 
@@ -18,23 +16,89 @@
     This class does two things - move the servo motor and provide distance
     readings. A call to move() will increment the servo by 1 degree, and turn
     the servo around if maximum rotation is reached. ping() will return a 
-    distance in millimeteres. 
+    distance in millimeters.
+
+    Template parameters:
+
+    class ServoInterface - Either a concrete or mock Servo object
 */
+template <class ServoInterface, class ArduinoInterface>
 class Radar
 {
-private:   
-    static const int8_t radar_l_ = -1; // using constant here instead of macro as per Google style guide 
-    static const int8_t radar_r_ = 1;  // https://google.github.io/styleguide/cppguide.html#Preprocessor_Macros
-    int8_t direction_;          // Radar will track whether servo needs to be going left or right
-    uint8_t servo_angle_;       // Angle of servo in range 0 <= angle <= 180
-    Servo servo_;               // servo object from servo.h
-    uint8_t trigger_pin_;       // trigger pin for sensor
-    uint8_t echo_pin_;          // echo pin for sensor
-public:    
-    //Radar (uint8_t trigger_pin, uint8_t echo_pin, uint8_t servo_pin);  // class constucter
-    void init(uint8_t trigger_pin, uint8_t echo_pin, uint8_t servo_pin);
-    uint8_t move();                // move the servo
-    uint32_t ping();            // ping the radar and return range measurement.
+ private:
+  static const int8_t radar_l_ = -1;  // using constant here instead of macro
+                                      // as per Google style guide
+  static const int8_t radar_r_ = 1;   // https://google.github.io/styleguide/cppguide.html#Preprocessor_Macros
+  int8_t direction_ {radar_l_};       // Radar will track whether servo needs
+                                      // to be going left or right
+  uint8_t servo_angle_ {90};          // Angle of servo in range 0 <= angle <= 180
+  ServoInterface* servo_;             // servo object - either concrete or mock
+  uint8_t trigger_pin_ {0};           // trigger pin for sensor
+  uint8_t echo_pin_ {0};              // echo pin for sensor
+ public:
+
+  // Default constructor
+  Radar() {
+    ServoInterface servo;
+    servo_ = &servo;
+  };
+
+  // Pass in servo object. Used for testing
+  explicit Radar(ServoInterface* servo) {
+      servo_ = servo;
+  };
+
+  // init radar object
+  void init(uint8_t trigger_pin, uint8_t echo_pin, uint8_t servo_pin) {
+    trigger_pin_ = trigger_pin; // save trigger and echo for ultrasonic sensor
+    echo_pin_ = echo_pin;
+
+    ArduinoInterface::pinMode(trigger_pin_, OUTPUT); // set the pin modes for sensor
+    ArduinoInterface::pinMode(echo_pin_, INPUT);
+
+    servo_->attach(servo_pin); // attach servo
+    /*
+    Serial.begin(9600);
+    Serial.print("Servo Pin: ");
+    Serial.println(servo_pin);
+    */
+    // servo init
+    servo_->write(servo_angle_); // set servo initial position
+  };
+
+  // move the servo
+  uint8_t move() {
+    // if servo is at minimum angle...
+    if (servo_angle_ == 0) {
+      // start turning right
+      direction_ = radar_r_;
+    } else if (servo_angle_ == 180) { // maximum angle
+      // start turning left
+      direction_ = radar_l_;
+    }
+
+    servo_angle_ += direction_;
+    servo_->write(servo_angle_);
+
+    return servo_angle_;
+  };
+
+  // ping the radar and return range measurement.
+  uint32_t ping() {
+    // make sure trigger is off...
+    ArduinoInterface::digitalWrite(trigger_pin_, LOW);
+    ArduinoInterface::delayMicroseconds(2); // wait 2µs
+
+    // Send trigger pulse
+    ArduinoInterface::digitalWrite(trigger_pin_, HIGH);
+    ArduinoInterface::delayMicroseconds(10); // wait 10µs
+    ArduinoInterface::digitalWrite(trigger_pin_, LOW);
+
+    // get the duration of pulse just sent
+    unsigned long duration = ArduinoInterface::pulseIn(echo_pin_, HIGH);
+
+    return duration * SPEED_OF_SOUND / 2; // divide by 2 for there and back again
+  };
 };
 
 #endif
