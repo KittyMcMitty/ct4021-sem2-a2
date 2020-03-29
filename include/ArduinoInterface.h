@@ -29,6 +29,7 @@ class MockArduinoClass{
   MOCK_METHOD(void, digitalWrite, (uint8_t, uint8_t));
   MOCK_METHOD(void, delayMicroseconds, (unsigned int));
   MOCK_METHOD(unsigned long, pulseIn, (uint8_t, uint8_t));
+  MOCK_METHOD(void, analogueWrite, (uint8_t, uint8_t))
 };
 
 /*
@@ -55,6 +56,9 @@ struct MockArduino {
   static unsigned long pulseIn(uint8_t pin, uint8_t val) {
     return mock->pulseIn(pin, val);
   }
+  static unsigned void analogueWrite(uint8_t pin, uint8_t val) {
+    return mock->analogueWrite(pin,val);
+  }
 };
 
 #else
@@ -79,6 +83,9 @@ class ConcreteArduino {
   };
   inline static unsigned long pulseIn(uint8_t pin, uint8_t val) {
     return ::pulseIn(pin, val);
+  }
+  inline static void analogueWrite(uint8_t pin, uint8_t val) {
+    return ::analogWrite(pin, val);
   }
 };
 
@@ -105,6 +112,9 @@ class ArduinoInterface {
   };
   inline static unsigned long pulseIn(uint8_t pin, uint8_t val) {
     return T::pulseIn(pin, val);
+  }
+  inline static void analogueWrite(uint8_t pin, uint8_t val) {
+    return T::analogueWrite(pin,val);
   }
 };
 
