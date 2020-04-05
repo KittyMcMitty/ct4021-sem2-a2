@@ -3,21 +3,36 @@ project(a_toolchain_test CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_library(Radar libraries/Radar/radar.cc libraries/Radar/radar.h)
+# Radar is just a template header so no build target to link against
+# add_library(Radar libraries/Radar/radar.h)
+# set_target_properties(Radar PROPERTIES LINKER_LANGUAGE CXX)
+
+add_library(
+        MyLED
+        libraries/MyLED/MyLED.cpp
+        libraries/MyLED/MyLED.h
+)
+
+add_library(
+        EventHandler
+        libraries/EventHandler/EventHandler.cc
+        libraries/EventHandler/EventHandler.h
+)
 
 add_executable(a_toolchain_test src/main.cpp include/ArduinoInterface.h)
-add_executable(unit_tests tests/test_radar.cc include/ArduinoInterface.h)
+add_executable(unit_tests tests/test_radar.cc tests/test_led.cc)
 
-target_link_libraries(unit_tests gmock_main gtest Radar)
+target_link_libraries(unit_tests gmock_main gtest)
 
-include_directories(libraries/Radar include)
+include_directories(libraries/Radar libraries/MyLED libraries/LiquidCrystal/src include)
 
 if(U_UPLOAD)
     target_link_arduino_libraries(a_toolchain_test PRIVATE core)
     target_link_arduino_libraries(a_toolchain_test PRIVATE Wire)
     target_link_arduino_libraries(a_toolchain_test PRIVATE Servo)
     target_link_arduino_libraries(a_toolchain_test PRIVATE LiquidCrystal)
-    target_link_arduino_libraries(a_toolchain_test PRIVATE Radar)
+    # target_link_arduino_libraries(a_toolchain_test PRIVATE MyLED)
+    # target_link_arduino_libraries(a_toolchain_test PRIVATE Radar)
 
     target_enable_arduino_upload(a_toolchain_test)
 
