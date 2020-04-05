@@ -41,6 +41,7 @@ class MockArduinoClass{
  * https://stackoverflow.com/questions/8942330/google-mock-unit-testing-static-methods-c
  */
 struct MockArduino {
+  // inline here is C++17. Avoids linker errors.
   inline static MockArduinoClass *mock;
 
   static void pinMode(uint8_t pin, uint8_t mode) {
@@ -97,7 +98,7 @@ class ConcreteArduino {
  * This class allows us to swap between our mock Arduino interface and the real
  * one. As both this and the concrete class are just a bunch of inline static
  * methods, they will get optimised away in the release build.
- */
+ *
 template <typename T>
 class ArduinoInterface {
  public:
@@ -114,8 +115,8 @@ class ArduinoInterface {
     return T::pulseIn(pin, val);
   }
   inline static void analogueWrite(uint8_t pin, uint8_t val) {
-    return T::analogueWrite(pin,val);
+    return T::analogueWrite(pin, val);
   }
 };
-
+*/
 #endif //A_TOOLCHAIN_TEST_INCLUDE_ARDUINOINTERFACE_H_
