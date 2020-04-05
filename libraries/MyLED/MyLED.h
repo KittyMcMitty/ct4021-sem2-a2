@@ -55,22 +55,25 @@ class MyLED  {
   // set colour
   void set_colour(LEDColour led_colour) {
 
-    led_colour_ = led_colour; // save colour
+    // only do this if colour is changing
+    if (led_colour_ != led_colour) {
+      led_colour_ = led_colour; // save colour
 
-    // Red
-    if (led_colour == LEDColour::RED) {
-      T::digitalWrite(red_pin_, HIGH);
-      T::digitalWrite(green_pin_, LOW);
+      // Red
+      if (led_colour == LEDColour::RED) {
+        T::digitalWrite(red_pin_, HIGH);
+        T::digitalWrite(green_pin_, LOW);
 
-      // Yellow
-    } else if (led_colour == LEDColour::YELLOW) {
-      T::digitalWrite(red_pin_, HIGH);
-      T::digitalWrite(green_pin_, HIGH);
+        // Yellow
+      } else if (led_colour == LEDColour::YELLOW) {
+        T::digitalWrite(red_pin_, HIGH);
+        T::digitalWrite(green_pin_, HIGH);
 
-      // Green
-    } else if (led_colour == LEDColour::GREEN) {
-      T::digitalWrite(red_pin_, LOW);
-      T::digitalWrite(green_pin_, HIGH);
+        // Green
+      } else if (led_colour == LEDColour::GREEN) {
+        T::digitalWrite(red_pin_, LOW);
+        T::digitalWrite(green_pin_, HIGH);
+      }
     }
   };
 
@@ -100,7 +103,7 @@ class MyLED  {
 
     } else { // increasing brightness
 
-      //
+      // difference between maximum and current brightness
       uint8_t difference = UINT8_MAX - brightness_;
 
       // If different is bigger than the increment, add the increment.

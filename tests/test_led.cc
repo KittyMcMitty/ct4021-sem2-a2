@@ -85,7 +85,14 @@ TEST_F(MyLEDTest, SetColourTestYellow) {
   my_led_.set_colour(LEDColour::YELLOW);
 }
 
-TEST_F(MyLEDTest, SetColourTestGreen) {
+// Green is the default state, so we have to change to another colour to test it
+TEST_F(MyLEDTest, SetColourTestRedThenGreen) {
+
+  EXPECT_CALL(mock_arduino_class_, digitalWrite(red_pin_, HIGH))
+      .Times(1);
+
+  EXPECT_CALL(mock_arduino_class_, digitalWrite(green_pin_, LOW))
+      .Times(1);
 
   EXPECT_CALL(mock_arduino_class_, digitalWrite(red_pin_, LOW))
       .Times(1);
@@ -93,6 +100,7 @@ TEST_F(MyLEDTest, SetColourTestGreen) {
   EXPECT_CALL(mock_arduino_class_, digitalWrite(green_pin_, HIGH))
       .Times(1);
 
+  my_led_.set_colour(LEDColour::RED);
   my_led_.set_colour(LEDColour::GREEN);
 }
 
