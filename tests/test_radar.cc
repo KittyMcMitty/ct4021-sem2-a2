@@ -29,7 +29,7 @@ class RadarTest : public ::testing::Test {
   MockArduinoClass mock_arduino_class_;
 
   // Radar with mock adapters
-  Radar<MockServo, ArduinoInterface<MockArduino>> radar_ {&mock_servo_};
+  Radar<MockServo, MockArduino> radar_ {&mock_servo_};
 
   RadarTest() {
     MockArduino::mock = &mock_arduino_class_;

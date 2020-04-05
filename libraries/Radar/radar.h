@@ -11,17 +11,16 @@
 #define SPEED_OF_SOUND 0.343 // speed of sound in mm/µs
 
 /*
-    Radar - encapsulates servo motor and distance sensor.
-
-    This class does two things - move the servo motor and provide distance
-    readings. A call to move() will increment the servo by 1 degree, and turn
-    the servo around if maximum rotation is reached. ping() will return a 
-    distance in millimeters.
-
-    Template parameters:
-
-    class ServoInterface - Either a concrete or mock Servo object
-*/
+ * Radar - encapsulates servo motor and distance sensor.
+ * This class does two things - move the servo motor and provide distance
+ * readings. A call to move() will increment the servo by 1 degree, and turn
+ * the servo around if maximum rotation is reached. ping() will return a
+ * distance in millimeters.
+ *
+ * Template parameters:
+ *
+ * class ServoInterface - Either a concrete or mock Servo object
+ */
 template <class ServoInterface, class ArduinoInterface>
 class Radar
 {
@@ -37,18 +36,35 @@ class Radar
   uint8_t echo_pin_ {0};              // echo pin for sensor
  public:
 
-  // Default constructor
+  /*
+   * Default constructor - used in release
+   */
   Radar() {
     ServoInterface servo;
     servo_ = &servo;
   };
 
-  // Pass in servo object. Used for testing
+  /*
+   * Pass in servo object. Used for testing
+   *
+   * Arguments:
+   *
+   * ServoInterface* servo - An object adhering to the ServoInterface type
+   * passed as template parameter.
+   */
   explicit Radar(ServoInterface* servo) {
       servo_ = servo;
   };
 
-  // init radar object
+  /*
+   * Init - initialise radar object
+   *
+   * Arguments:
+   *
+   * uint8_t trigger_pin  - Trigger pin on ultrasonic sensor
+   * uint8_t echo_pin     - Echo pin on ultrasonic sensor
+   * uint8_t servo_pin    - Pin used by servo motor
+   */
   void init(uint8_t trigger_pin, uint8_t echo_pin, uint8_t servo_pin) {
     trigger_pin_ = trigger_pin; // save trigger and echo for ultrasonic sensor
     echo_pin_ = echo_pin;
@@ -57,16 +73,17 @@ class Radar
     ArduinoInterface::pinMode(echo_pin_, INPUT);
 
     servo_->attach(servo_pin); // attach servo
-    /*
-    Serial.begin(9600);
-    Serial.print("Servo Pin: ");
-    Serial.println(servo_pin);
-    */
-    // servo init
+
     servo_->write(servo_angle_); // set servo initial position
   };
 
-  // move the servo
+  /*
+   * Move - move the servo
+   *
+   * This method moves the servo by 1° with each call. When maximum rotation is
+   * attained, the angle will reverse and subsequent calls will increment the
+   * servo in the opposite direction.
+   */
   uint8_t move() {
     // if servo is at minimum angle...
     if (servo_angle_ == 0) {
@@ -83,18 +100,22 @@ class Radar
     return servo_angle_;
   };
 
-  // ping the radar and return range measurement.
+  /*
+   * Ping - ping the radar and return range measurement.
+   *
+   * This method returns a range measurement from the ultrasonic sensor in mm.
+   */
   uint32_t ping() {
     // make sure trigger is off...
     ArduinoInterface::digitalWrite(trigger_pin_, LOW);
     ArduinoInterface::delayMicroseconds(2); // wait 2µs
 
-    // Send trigger pulse
+    // Send trigger set_pulse
     ArduinoInterface::digitalWrite(trigger_pin_, HIGH);
     ArduinoInterface::delayMicroseconds(10); // wait 10µs
     ArduinoInterface::digitalWrite(trigger_pin_, LOW);
 
-    // get the duration of pulse just sent
+    // get the duration of set_pulse just sent
     unsigned long duration = ArduinoInterface::pulseIn(echo_pin_, HIGH);
 
     return duration * SPEED_OF_SOUND / 2; // divide by 2 for there and back again
