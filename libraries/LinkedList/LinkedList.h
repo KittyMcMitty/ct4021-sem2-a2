@@ -31,7 +31,10 @@ class ListNode {
 /*
  * LinkedList - a simple linked list class
  *
- * This class
+ * This class provides an insert, delete, and iterate method. Insert will place
+ * an entry at the head of the list. Delete will delete the first found match in
+ * the list. Iterate returns a subsequent list entry with every call, and NULL
+ * to indicate the end of the list.
  */
 template<typename T>
 class LinkedList {
@@ -76,6 +79,13 @@ class LinkedList {
     }
   };
 
+  /*
+   * Remove - remove an entry from the list.
+   *
+   * This method will iterate over the list and removew the first matching
+   * entry found. If the same thing has been added twice, it will only be
+   * deleted once!
+   */
   void remove(T data) {
 
     ListNode<T>* current_ptr = head_;
