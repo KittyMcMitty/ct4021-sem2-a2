@@ -21,7 +21,7 @@
  *
  * class ServoInterface - Either a concrete or mock Servo object
  */
-template <class ServoInterface, class ArduinoInterface>
+template <class ServoInterface>
 class Radar
 {
  private:
@@ -66,11 +66,14 @@ class Radar
    * uint8_t servo_pin    - Pin used by servo motor
    */
   void init(uint8_t trigger_pin, uint8_t echo_pin, uint8_t servo_pin) {
+
+    using AI = ArduinoInterface;
+
     trigger_pin_ = trigger_pin; // save trigger and echo for ultrasonic sensor
     echo_pin_ = echo_pin;
 
-    ArduinoInterface::pinMode(trigger_pin_, OUTPUT); // set the pin modes for sensor
-    ArduinoInterface::pinMode(echo_pin_, INPUT);
+    AI::pinMode(trigger_pin_, OUTPUT); // set the pin modes for sensor
+    AI::pinMode(echo_pin_, INPUT);
 
     servo_->attach(servo_pin); // attach servo
 
@@ -106,17 +109,19 @@ class Radar
    * This method returns a range measurement from the ultrasonic sensor in mm.
    */
   uint32_t ping() {
+    using AI = ArduinoInterface;
+
     // make sure trigger is off...
-    ArduinoInterface::digitalWrite(trigger_pin_, LOW);
-    ArduinoInterface::delayMicroseconds(2); // wait 2µs
+    AI::digitalWrite(trigger_pin_, LOW);
+    AI::delayMicroseconds(2); // wait 2µs
 
     // Send trigger set_pulse
-    ArduinoInterface::digitalWrite(trigger_pin_, HIGH);
-    ArduinoInterface::delayMicroseconds(10); // wait 10µs
-    ArduinoInterface::digitalWrite(trigger_pin_, LOW);
+    AI::digitalWrite(trigger_pin_, HIGH);
+    AI::delayMicroseconds(10); // wait 10µs
+    AI::digitalWrite(trigger_pin_, LOW);
 
     // get the duration of set_pulse just sent
-    unsigned long duration = ArduinoInterface::pulseIn(echo_pin_, HIGH);
+    unsigned long duration = AI::pulseIn(echo_pin_, HIGH);
 
     return duration * SPEED_OF_SOUND / 2; // divide by 2 for there and back again
   };
