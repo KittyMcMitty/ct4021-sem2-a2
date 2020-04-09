@@ -6,7 +6,7 @@
 #define A_TOOLCHAIN_TEST_INCLUDE_ARDUINOINTERFACE_H_
 
 #ifdef UNIT_TEST
-#include <gmock/gmock.h>
+#include "gmock/gmock.h"
 
 #define HIGH 0x1
 #define LOW  0x0
@@ -30,6 +30,7 @@ class MockArduinoClass{
   MOCK_METHOD(void, delayMicroseconds, (unsigned int));
   MOCK_METHOD(unsigned long, pulseIn, (uint8_t, uint8_t));
   MOCK_METHOD(void, analogueWrite, (uint8_t, uint8_t));
+  MOCK_METHOD(uint32_t, millis, ());
 };
 
 /*
@@ -60,6 +61,9 @@ struct MockArduino {
   static void analogueWrite(uint8_t pin, uint8_t val) {
     return mock->analogueWrite(pin,val);
   }
+  static uint32_t millis() {
+    return mock->millis();
+  }
 };
 
 #else
@@ -88,6 +92,9 @@ class ConcreteArduino {
   inline static void analogueWrite(uint8_t pin, uint8_t val) {
     return ::analogWrite(pin, val);
   }
+  inline static uint32_t millis() {
+    return ::millis();
+  }
 };
 
 #endif // UNIT_TEST
@@ -98,25 +105,32 @@ class ConcreteArduino {
  * This class allows us to swap between our mock Arduino interface and the real
  * one. As both this and the concrete class are just a bunch of inline static
  * methods, they will get optimised away in the release build.
- *
-template <typename T>
+ */
 class ArduinoInterface {
  public:
+#ifdef UNIT_TEST // this avoids having to template every class using this interface
+ using AI = MockArduino;
+#else
+  using AI = ConcreteArduino;
+#endif // UNIT_TEST
   inline static void pinMode(uint8_t pin, uint8_t mode) {
-    T::pinMode(pin, mode);
+    AI::pinMode(pin, mode);
   }
   inline static void digitalWrite(uint8_t pin, uint8_t val) {
-    T::digitalWrite(pin, val);
+    AI::digitalWrite(pin, val);
   };
   inline static void delayMicroseconds(unsigned int us) {
-    T::delayMicroseconds(us);
+    AI::delayMicroseconds(us);
   };
   inline static unsigned long pulseIn(uint8_t pin, uint8_t val) {
-    return T::pulseIn(pin, val);
+    return AI::pulseIn(pin, val);
   }
   inline static void analogueWrite(uint8_t pin, uint8_t val) {
-    return T::analogueWrite(pin, val);
+    return AI::analogueWrite(pin, val);
+  }
+  inline static uint32_t millis() {
+    return AI::millis();
   }
 };
-*/
+
 #endif //A_TOOLCHAIN_TEST_INCLUDE_ARDUINOINTERFACE_H_

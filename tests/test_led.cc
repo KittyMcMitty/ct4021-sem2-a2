@@ -42,7 +42,7 @@
   const static  uint8_t blue_pin_   {3};
 
   // Mock fixture
-  MyLED<MockArduino> my_led_ {red_pin_, green_pin_, blue_pin_};
+  MyLED my_led_ {red_pin_, green_pin_, blue_pin_};
 
 };
 
@@ -59,7 +59,7 @@ TEST_F(MyLEDTest, ConstructorTest) {
   EXPECT_CALL(mock_arduino_class_, pinMode(blue_pin_, OUTPUT))
       .Times(1);
 
-  MyLED<MockArduino> test_led(red_pin_, green_pin_, blue_pin_);
+  MyLED test_led(red_pin_, green_pin_, blue_pin_);
 };
 
 

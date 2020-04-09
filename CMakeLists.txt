@@ -28,11 +28,12 @@ add_library(
 add_executable(a_toolchain_test src/main.cpp include/ArduinoInterface.h)
 add_executable(unit_tests tests/test_radar.cc tests/test_led.cc tests/test_linked_list.cc)
 
-target_link_libraries(unit_tests gmock_main gtest)
+target_link_libraries(unit_tests gmock_main gtest MyLED)
 
 include_directories(
-        libraries/Radar libraries/MyLED libraries/LiquidCrystal/src
-        include libraries/LinkedList
+        include libraries/Radar libraries/MyLED libraries/LiquidCrystal/src
+        libraries/LinkedList cmake-build-debug/_deps/googletest-src/googlemock/include
+        cmake-build-debug/_deps/googletest-src/googletest/include
 )
 
 if(U_UPLOAD)
