@@ -63,7 +63,7 @@ class LinkedList {
    *
    * This will stick an item at the START of the list. This is makes this nice
    * and fast. So, items should be added in REVERSE order as the things you add
-   * later will be called before, if that is important to you.
+   * later will be return before, if that is important to you.
    */
   void insert(T data) {
 
@@ -133,7 +133,7 @@ class LinkedList {
 
     } else {
       iterate_ptr_ = head_; // reset iterator back to head
-      return NULL;       // return nullptr
+      return NULL;       // return null
     }
   };
 };
