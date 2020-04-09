@@ -105,6 +105,10 @@ class ConcreteArduino {
  * This class allows us to swap between our mock Arduino interface and the real
  * one. As both this and the concrete class are just a bunch of inline static
  * methods, they will get optimised away in the release build.
+ *
+ * A preprocessor macro is using to switch between concrete and mock interfaces
+ * depending on if UNIT_TEST is set. So, this detail is invisible to all code
+ * that depends on it.
  */
 class ArduinoInterface {
  public:

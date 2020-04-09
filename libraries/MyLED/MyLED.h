@@ -12,15 +12,13 @@ enum class LEDColour { RED, YELLOW, GREEN };
 /*
  * MyLED - Simple RGB LED class.
  *
- * Initilise with the red, green, and blue pins used.
+ * Initialise with the red, green, and blue pins used.
  *
  * Provides three methods - set_colour(), set_pulse(), and pulse().
  *
  * set_colour sets the current LED colour using an LEDColour enum class.
  * set_pulse set the LED pulse duration in ms.
  * pulse pulses
- *
- * Template parameter is concrete or mock Arduino interface
  */
 //template<class T>
 class MyLED {
@@ -38,6 +36,7 @@ class MyLED {
 
   // Arguments are red, green, and blue pins for LED
   MyLED(uint8_t red_pin, uint8_t green_pin, uint8_t blue_pin);
+
   // set colour
   void set_colour(LEDColour led_colour);
 
