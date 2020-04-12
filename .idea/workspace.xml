@@ -25,14 +25,12 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="68a28d0b-2e43-4de6-88a5-76bb907dcc81" name="Default Changelist" comment="Re-instated ArduinoInterface class. Now either concrete or mock interface is selected using preprocessor depending on if UNIT_TEST is set during build.&#10;&#10;Refactored MyLED to no longer use ArduinoInterface as a template parameter and updated tests.">
-      <change afterPath="$PROJECT_DIR$/libraries/CommandQueue/CommandQueue.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libraries/CommandQueue/CommandQueue.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_command_queue.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_mylcd.cc" afterDir="false" />
+    <list default="true" id="68a28d0b-2e43-4de6-88a5-76bb907dcc81" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libraries/CommandQueue/CommandQueue.cc" beforeDir="false" afterPath="$PROJECT_DIR$/libraries/CommandQueue/CommandQueue.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libraries/CommandQueue/CommandQueue.h" beforeDir="false" afterPath="$PROJECT_DIR$/libraries/CommandQueue/CommandQueue.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/libraries/LinkedList/LinkedList.h" beforeDir="false" afterPath="$PROJECT_DIR$/libraries/LinkedList/LinkedList.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_command_queue.cc" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_command_queue.cc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test_linked_list.cc" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_linked_list.cc" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -333,7 +331,21 @@
       <option name="project" value="LOCAL" />
       <updated>1586665787491</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Rollback on iterator investigation">
+      <created>1586712520440</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1586712520440</updated>
+    </task>
+    <task id="LOCAL-00017" summary="CommandQueue current WIP. Not passing test atm.">
+      <created>1586712613087</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1586712613087</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -351,6 +363,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="Initial commit - working build system" />
     <MESSAGE value="Radar unit tests finished." />
     <MESSAGE value="Delete unecessary Arduino-CMake-Toolchain files" />
@@ -368,7 +381,9 @@
     <MESSAGE value="Comment tidy up.&#10;&#10;Removed MyLED template parameter from main.cpp" />
     <MESSAGE value="Removed ArduinoInterface template arguments from Radar class. Updated tests." />
     <MESSAGE value="LinkedList reformatting and tidy up" />
-    <option name="LAST_COMMIT_MESSAGE" value="LinkedList reformatting and tidy up" />
+    <MESSAGE value="Rollback on iterator investigation" />
+    <MESSAGE value="CommandQueue current WIP. Not passing test atm." />
+    <option name="LAST_COMMIT_MESSAGE" value="CommandQueue current WIP. Not passing test atm." />
   </component>
   <component name="WindowStateProjectService">
     <state x="289" y="385" key="#New_File_Extensions" timestamp="1585327258860">
@@ -396,54 +411,54 @@
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state x="604" y="474" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1585429658571" />
-    <state x="174" y="14" width="1526" height="1314" key="CommitChangelistDialog2" timestamp="1586712597139">
+    <state x="174" y="14" width="1526" height="1314" key="CommitChangelistDialog2" timestamp="1586712612974">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state x="174" y="14" width="1526" height="1314" key="CommitChangelistDialog2/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586712597139" />
+    <state x="174" y="14" width="1526" height="1314" key="CommitChangelistDialog2/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586712612974" />
     <state x="0" y="109" width="2048" height="1152" key="DiffContextDialog" timestamp="1586455595500">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state x="0" y="109" width="2048" height="1152" key="DiffContextDialog/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586455595500" />
-    <state width="1687" height="304" key="GridCell.Tab.0.bottom" timestamp="1586712597164">
+    <state width="1608" height="303" key="GridCell.Tab.0.bottom" timestamp="1586716932301">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state width="1525" height="551" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1586437238702" />
-    <state width="1687" height="304" key="GridCell.Tab.0.bottom/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586712597164" />
-    <state width="1687" height="304" key="GridCell.Tab.0.center" timestamp="1586712597162">
+    <state width="1608" height="303" key="GridCell.Tab.0.bottom/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586716932301" />
+    <state width="1608" height="303" key="GridCell.Tab.0.center" timestamp="1586716932300">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state width="1525" height="551" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1586437238701" />
-    <state width="1687" height="304" key="GridCell.Tab.0.center/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586712597162" />
-    <state width="1687" height="304" key="GridCell.Tab.0.left" timestamp="1586712597161">
+    <state width="1608" height="303" key="GridCell.Tab.0.center/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586716932300" />
+    <state width="1608" height="303" key="GridCell.Tab.0.left" timestamp="1586716932299">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state width="1525" height="551" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1586437238700" />
-    <state width="1687" height="304" key="GridCell.Tab.0.left/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586712597161" />
-    <state width="1687" height="304" key="GridCell.Tab.0.right" timestamp="1586712597163">
+    <state width="1608" height="303" key="GridCell.Tab.0.left/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586716932299" />
+    <state width="1608" height="303" key="GridCell.Tab.0.right" timestamp="1586716932300">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state width="1525" height="551" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1586437238702" />
-    <state width="1687" height="304" key="GridCell.Tab.0.right/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586712597163" />
-    <state width="1867" height="317" key="GridCell.Tab.1.bottom" timestamp="1586667916957">
+    <state width="1608" height="303" key="GridCell.Tab.0.right/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586716932300" />
+    <state width="1608" height="311" key="GridCell.Tab.1.bottom" timestamp="1586716373418">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state width="1525" height="551" key="GridCell.Tab.1.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1586437238704" />
-    <state width="1867" height="317" key="GridCell.Tab.1.bottom/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586667916957" />
-    <state width="1867" height="317" key="GridCell.Tab.1.center" timestamp="1586667916955">
+    <state width="1608" height="311" key="GridCell.Tab.1.bottom/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586716373418" />
+    <state width="1608" height="311" key="GridCell.Tab.1.center" timestamp="1586716373417">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state width="1525" height="551" key="GridCell.Tab.1.center/0.0.1680.1050@0.0.1680.1050" timestamp="1586437238704" />
-    <state width="1867" height="317" key="GridCell.Tab.1.center/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586667916955" />
-    <state width="1867" height="317" key="GridCell.Tab.1.left" timestamp="1586667916954">
+    <state width="1608" height="311" key="GridCell.Tab.1.center/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586716373417" />
+    <state width="1608" height="311" key="GridCell.Tab.1.left" timestamp="1586716373416">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state width="1525" height="551" key="GridCell.Tab.1.left/0.0.1680.1050@0.0.1680.1050" timestamp="1586437238703" />
-    <state width="1867" height="317" key="GridCell.Tab.1.left/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586667916954" />
-    <state width="1867" height="317" key="GridCell.Tab.1.right" timestamp="1586667916956">
+    <state width="1608" height="311" key="GridCell.Tab.1.left/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586716373416" />
+    <state width="1608" height="311" key="GridCell.Tab.1.right" timestamp="1586716373417">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state width="1525" height="551" key="GridCell.Tab.1.right/0.0.1680.1050@0.0.1680.1050" timestamp="1586437238704" />
-    <state width="1867" height="317" key="GridCell.Tab.1.right/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586667916956" />
+    <state width="1608" height="311" key="GridCell.Tab.1.right/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586716373417" />
     <state x="694" y="438" key="RollbackChangesDialog" timestamp="1586455522491">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
@@ -471,16 +486,5 @@
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state x="424" y="331" width="670" height="676" key="search.everywhere.popup/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1585497377592" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/tests/test_command_queue.cc</url>
-          <line>61</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

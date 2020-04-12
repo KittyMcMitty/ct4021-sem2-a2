@@ -61,24 +61,28 @@ uint32_t CommandQueue::execute_current_entry() {
   using AI = ArduinoInterface;
 
   // if we don't have a command, get one
-  if (current_command.function_ == nullptr) {
+  if (current_command == nullptr) {
+    update_current_command_();
+  } else if (current_command->function_ == nullptr) {
     update_current_command_();
   }
 
   // if we have a command, do it and update
-  if (current_command.function_ != nullptr) {
+  if (current_command->function_ != nullptr) {
 
     // do the command
-    current_command.function_();
+    current_command->function_();
 
     // save the current time so we know when we called it
-    current_command.last_call_ = AI::millis();
+    current_command->last_call_ = AI::millis();
+
+    CommandQueueEntry* saved_command = current_command;
 
     // get the next command ready for next time we are called
     update_current_command_();
 
     // last_call_ + frequency_ is the time the command should be called next
-    return current_command.last_call_ + current_command.frequency_;
+    return saved_command->last_call_ + saved_command->frequency_;
   } else {
     return 0; // otherwise, there must be no commands!
   }
@@ -93,18 +97,22 @@ uint32_t CommandQueue::execute_current_entry() {
 void CommandQueue::update_current_command_() {
 
   queue_.reset_iterate();
-  CommandQueueEntry new_command;  // new command to save and compare
-  CommandQueueEntry start_command = queue_.iterate();
+  CommandQueueEntry* new_command = queue_.iterate();;  // new command to save and compare
 
-  // while we're not back at the start
-  while (new_command != start_command) {
-    // get a new command
-    new_command = queue_.iterate();
+  if (current_command == nullptr) {
+    current_command = new_command;
+  }
+
+  // while we're not at the end
+  while (new_command != nullptr) {
 
     // if its due sooner, save it.
-    if (new_command < current_command) {
+    if (*new_command < *current_command) {
       current_command = new_command;
     }
+
+    // get a new command
+    new_command = queue_.iterate();
   }
 }
 

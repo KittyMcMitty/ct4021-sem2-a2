@@ -48,7 +48,7 @@ class LinkedList {
   ~LinkedList();
   void insert(T data);
   void remove(T data);
-  T iterate();
+  T* iterate();
   void reset_iterate();
 
 };
@@ -142,20 +142,28 @@ void LinkedList<T>::remove(T data) {
  * until the next iteration round, as they are inserted at the head.
  */
 template<typename T>
-T LinkedList<T>::iterate() {
+T* LinkedList<T>::iterate() {
   // if we aren't at the end of the list
   if (iterate_ptr_ != nullptr) {
     ListNode<T>* old_ptr = iterate_ptr_;  // save current pointer
     iterate_ptr_ = iterate_ptr_->next_;   // advance iterator
-    return old_ptr->data_;                // return saved data
+    return &old_ptr->data_;                // return saved data
 
   } else {
     iterate_ptr_ = head_; // reset iterator back to head
-    T empty;
-    return empty; // return an empty object
+    return nullptr; // return nullptr
   }
 }
 
+/*
+ * Reset iterate - reset the iterate pointer
+ *
+ * This will reset the iterator to the start of the list. The caller can call
+ * this method to know they are getting the start, as iterate will eventually
+ * return a nullptr to signal the end.
+ *
+ * TODO: refactor iteration out into a separate iterator class
+ */
 template<typename T>
 void LinkedList<T>::reset_iterate() {
   iterate_ptr_ = head_;

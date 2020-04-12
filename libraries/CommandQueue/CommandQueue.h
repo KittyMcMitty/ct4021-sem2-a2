@@ -55,7 +55,7 @@ class CommandQueueEntry {
 class CommandQueue {
  private:
   LinkedList<CommandQueueEntry> queue_;
-  CommandQueueEntry current_command;
+  CommandQueueEntry* current_command {nullptr};
 
   void update_current_command_();
 

@@ -35,6 +35,11 @@ class CommandQueueTest : public CommandQueueEntryTest {
   CommandQueueTest() {
     MockArduino::mock = &mock_arduino_;
   }
+
+  ~CommandQueueTest() {
+    a_result = false;
+    b_result = false;
+  }
 };
 
 
@@ -55,7 +60,7 @@ TEST_F(CommandQueueTest, TestAddAndExecute) {
   uint32_t returned_time = 0;
 
   EXPECT_CALL(mock_arduino_, millis())
-      .Times(1)
+      .Times(2)
       .WillRepeatedly(Return(millis_time));;
 
   queue_.add_entry(function_a, frequency_a_);
@@ -69,18 +74,61 @@ TEST_F(CommandQueueTest, TestAddAndExecute) {
 TEST_F(CommandQueueTest, TestMultipleAddAndExecute) {
   using ::testing::Return;
 
+  uint32_t millis_time_a = 100; // function a added with this time
+  uint32_t millis_time_b = 200; // function b added with this
+  uint32_t millis_time_c = 300; // both functions get this when they execute
+  uint32_t returned_time = 0;
+
+  EXPECT_CALL(mock_arduino_, millis())
+      .Times(4);
+
+  ON_CALL(mock_arduino_, millis())
+      .WillByDefault(Return(millis_time_a));
+
+  queue_.add_entry(function_a, frequency_a_);
+
+  ON_CALL(mock_arduino_, millis())
+      .WillByDefault(Return(millis_time_b));
+
+  queue_.add_entry(function_b, frequency_b_);
+
+  ON_CALL(mock_arduino_, millis())
+      .WillByDefault(Return(millis_time_c));
+
+  returned_time = queue_.execute_current_entry();
+
+  ASSERT_EQ(a_result, true);
+  ASSERT_EQ(returned_time, millis_time_c + frequency_a_);
+
+  returned_time = queue_.execute_current_entry();
+
+  ASSERT_EQ(b_result, true);
+  ASSERT_EQ(returned_time, millis_time_c + frequency_b_);
+
+}
+
+TEST_F(CommandQueueTest, TestAddAndRemove) {
+  using ::testing::Return;
+
   uint32_t millis_time = 100;
   uint32_t returned_time = 0;
 
   EXPECT_CALL(mock_arduino_, millis())
-      .Times(1)
+      .Times(4)
       .WillRepeatedly(Return(millis_time));
 
   queue_.add_entry(function_a, frequency_a_);
   queue_.add_entry(function_b, frequency_b_);
-}
 
-TEST_F(CommandQueueTest, TestAddAndRemove) {
+  queue_.remove_entry(function_a);
+
+  returned_time = queue_.execute_current_entry();
+  ASSERT_EQ(returned_time, millis_time + frequency_b_);
+  returned_time = queue_.execute_current_entry();
+  ASSERT_EQ(returned_time, millis_time + frequency_b_);
+
+  ASSERT_EQ(a_result, false);
+  ASSERT_EQ(b_result, true);
 
 }
 

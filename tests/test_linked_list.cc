@@ -24,15 +24,15 @@ TEST_F(LinkedListTest, TestInsertAndIterate) {
 
   // we should now have a list of 9 to 0 (inserted at head), so test that
   for (i=9; i>0; i--) {
-    uint8_t result = test_list.iterate();
+    uint8_t* result = test_list.iterate();
 
-    ASSERT_EQ(i, result);
+    ASSERT_EQ(i, *result);
   }
 }
 
 TEST_F(LinkedListTest, TestInsertAndDelete) {
   uint8_t i = 0;
-  uint8_t  result = 0;
+  uint8_t*  result = &i; // initialise it with something
 
   // insert 0 to 9
   for (i=0; i<=9; i++) {
@@ -45,6 +45,6 @@ TEST_F(LinkedListTest, TestInsertAndDelete) {
 
   for (i=0; i<=2; i++) {
     result = test_list.iterate();
-    ASSERT_EQ(result, NULL);
+    ASSERT_EQ(result, nullptr);
   }
 }
