@@ -20,7 +20,7 @@ TEST_F(LinkedListTest, TestInsertAndIterate) {
   }
 
   // this should clear the iterator and put it back at start
-  test_list.iterate();
+  test_list.reset_iterate();
 
   // we should now have a list of 9 to 0 (inserted at head), so test that
   for (i=9; i>0; i--) {

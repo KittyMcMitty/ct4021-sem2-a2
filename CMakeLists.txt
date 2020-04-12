@@ -14,7 +14,7 @@ add_library(
 )
 
 add_library(
-        EventHandler
+        CommandQueue
         libraries/CommandQueue/CommandQueue.cc
         libraries/CommandQueue/CommandQueue.h
 )
@@ -26,13 +26,14 @@ add_library(
 )
 
 add_executable(a_toolchain_test src/main.cpp include/ArduinoInterface.h)
-add_executable(unit_tests tests/test_radar.cc tests/test_led.cc tests/test_linked_list.cc)
+add_executable(unit_tests tests/test_radar.cc tests/test_led.cc tests/test_linked_list.cc tests/test_command_queue.cc)
 
-target_link_libraries(unit_tests gmock_main gtest MyLED)
+target_link_libraries(unit_tests gmock_main gtest MyLED CommandQueue)
 
 include_directories(
         include libraries/Radar libraries/MyLED libraries/LiquidCrystal/src
-        libraries/LinkedList cmake-build-debug/_deps/googletest-src/googlemock/include
+        libraries/LinkedList libraries/CommandQueue
+        cmake-build-debug/_deps/googletest-src/googlemock/include
         cmake-build-debug/_deps/googletest-src/googletest/include
 )
 
