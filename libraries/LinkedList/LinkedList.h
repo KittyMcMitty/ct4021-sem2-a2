@@ -51,30 +51,6 @@ class LinkedList {
   T iterate();
   void reset_iterate();
 
-  /*
-   * Iterator - iterator helper class
-   *
-   * This class provides methods to iterate over the linked list. As this is a
-   * singly linked list, there is no random access and only forward traversal.
-   */
-  class iterator {
-   private:
-    LinkedList<T>* list_;
-
-   public:
-    explicit iterator(LinkedList<T>* list) : list_(list) {}
-
-    T operator*() const { return list_->data; }
-
-    iterator operator++();    // pre-increment
-    iterator operator++(int); // post-increment
-
-  };
-
-  iterator begin()  { return iterator(this); } // an iterator for this list
-  iterator end()    { return iterator(nullptr); } // end is nullptr
-
-
 };
 
 /*
