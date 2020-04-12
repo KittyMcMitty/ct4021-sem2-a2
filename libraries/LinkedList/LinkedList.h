@@ -49,6 +49,31 @@ class LinkedList {
   void insert(T data);
   void remove(T data);
   T iterate();
+  void reset_iterate();
+
+  /*
+   * Iterator - iterator helper class
+   *
+   * This class provides methods to iterate over the linked list. As this is a
+   * singly linked list, there is no random access and only forward traversal.
+   */
+  class iterator {
+   private:
+    LinkedList<T>* list_;
+
+   public:
+    explicit iterator(LinkedList<T>* list) : list_(list) {}
+
+    T operator*() const { return list_->data; }
+
+    iterator operator++();    // pre-increment
+    iterator operator++(int); // post-increment
+
+  };
+
+  iterator begin()  { return iterator(this); } // an iterator for this list
+  iterator end()    { return iterator(nullptr); } // end is nullptr
+
 
 };
 
@@ -97,7 +122,7 @@ void LinkedList<T>::insert(T data) {
 /*
  * Remove - remove an entry from the list.
  *
- * This method will iterate over the list and removew the first matching
+ * This method will iterate over the list and remove the first matching
  * entry found. If the same thing has been added twice, it will only be
  * deleted once!
  */
@@ -153,6 +178,11 @@ T LinkedList<T>::iterate() {
     T empty;
     return empty; // return an empty object
   }
+}
+
+template<typename T>
+void LinkedList<T>::reset_iterate() {
+  iterate_ptr_ = head_;
 }
 
 #endif //A_TOOLCHAIN_TEST_LIBRARIES_LINKEDLIST_LINKEDLIST_H_
