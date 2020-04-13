@@ -9,6 +9,8 @@
 #include <cstdint>
 #else
 #include <ArduinoInterface.h>
+#include <new.h>
+#include <stdlib.h>
 #endif // UNIT_TEST
 
 template <typename T> class ListNode;
@@ -69,6 +71,7 @@ LinkedList<T>::~LinkedList() {
     old_ptr = current_ptr; // save that pointer
     current_ptr = current_ptr->next_; // advance to next pointer
     delete old_ptr; // and now delete that object
+    //free(old_ptr);
   }
 }
 

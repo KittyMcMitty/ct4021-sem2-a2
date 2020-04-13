@@ -5,17 +5,20 @@
       <config projectName="a_toolchain_test" targetName="a_toolchain_test" />
       <config projectName="a_toolchain_test" targetName="_arduino_lib_Servo" />
       <config projectName="a_toolchain_test" targetName="MyLED" />
+      <config projectName="a_toolchain_test" targetName="_arduino_lib_CommandQueue" />
       <config projectName="a_toolchain_test" targetName="CommandQueue" />
       <config projectName="a_toolchain_test" targetName="gmock_main" />
       <config projectName="a_toolchain_test" targetName="gmock" />
       <config projectName="a_toolchain_test" targetName="upload-a_toolchain_test" />
       <config projectName="a_toolchain_test" targetName="LinkedList" />
       <config projectName="a_toolchain_test" targetName="gtest_main" />
+      <config projectName="a_toolchain_test" targetName="_arduino_lib_LinkedList" />
       <config projectName="a_toolchain_test" targetName="_arduino_lib_LiquidCrystal" />
       <config projectName="a_toolchain_test" targetName="_arduino_lib_core" />
       <config projectName="a_toolchain_test" targetName="gtest" />
       <config projectName="a_toolchain_test" targetName="unit_tests" />
       <config projectName="a_toolchain_test" targetName="_arduino_lib_Wire" />
+      <config projectName="a_toolchain_test" targetName="_arduino_lib_MyLED" />
     </generated>
   </component>
   <component name="CMakeSettings">
@@ -26,12 +29,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="68a28d0b-2e43-4de6-88a5-76bb907dcc81" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/include/new.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/new.cc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libraries/CommandQueue/CommandQueue.cc" beforeDir="false" afterPath="$PROJECT_DIR$/libraries/CommandQueue/CommandQueue.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libraries/CommandQueue/CommandQueue.h" beforeDir="false" afterPath="$PROJECT_DIR$/libraries/CommandQueue/CommandQueue.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/libraries/LinkedList/LinkedList.h" beforeDir="false" afterPath="$PROJECT_DIR$/libraries/LinkedList/LinkedList.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_command_queue.cc" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_command_queue.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_linked_list.cc" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_linked_list.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libraries/MyLED/MyLED.h" beforeDir="false" afterPath="$PROJECT_DIR$/libraries/MyLED/MyLED.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +45,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Upload" />
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
@@ -75,14 +79,14 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="dynamic.analysis.tools.valgrind" />
+    <property name="settings.editor.selected.configurable" value="CMakeSettings" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
-  <component name="RunManager" selected="CMake Application.unit_tests">
+  <component name="RunManager" selected="CMake Application.a_toolchain_test">
     <configuration name="MyLEDTest.ConstructorTest" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" temporary="true" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="unit_tests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="a_toolchain_test" RUN_TARGET_NAME="unit_tests" TEST_CLASS="MyLEDTest" TEST_METHOD="ConstructorTest" TEST_MODE="SUITE_TEST">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -122,7 +126,22 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="_arduino_lib_CommandQueue" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="_arduino_lib_CommandQueue" CONFIG_NAME="Upload">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="_arduino_lib_LinkedList" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="_arduino_lib_LinkedList" CONFIG_NAME="Upload">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="_arduino_lib_LiquidCrystal" type="CMakeRunConfiguration" factoryName="Application" folderName="libs" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="_arduino_lib_LiquidCrystal" CONFIG_NAME="Upload">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="_arduino_lib_MyLED" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="a_toolchain_test" TARGET_NAME="_arduino_lib_MyLED" CONFIG_NAME="Upload">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -187,6 +206,9 @@
       <item itemvalue="CMake Application.gtest" />
       <item itemvalue="CMake Application.gtest_main" />
       <item itemvalue="CMake Application.MyLED" />
+      <item itemvalue="CMake Application._arduino_lib_CommandQueue" />
+      <item itemvalue="CMake Application._arduino_lib_LinkedList" />
+      <item itemvalue="CMake Application._arduino_lib_MyLED" />
       <item itemvalue="CMake Application.LinkedList" />
       <item itemvalue="CMake Application.unit_tests" />
       <item itemvalue="CMake Application.upload-a_toolchain_test" />
@@ -345,7 +367,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586712613087</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Command Queue initial version complete.&#10;&#10;TODO: refactor linked list at some point to have an iterator. It will make everything much cleaner.">
+      <created>1586717487023</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1586717487023</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -383,7 +412,8 @@
     <MESSAGE value="LinkedList reformatting and tidy up" />
     <MESSAGE value="Rollback on iterator investigation" />
     <MESSAGE value="CommandQueue current WIP. Not passing test atm." />
-    <option name="LAST_COMMIT_MESSAGE" value="CommandQueue current WIP. Not passing test atm." />
+    <MESSAGE value="Command Queue initial version complete.&#10;&#10;TODO: refactor linked list at some point to have an iterator. It will make everything much cleaner." />
+    <option name="LAST_COMMIT_MESSAGE" value="Command Queue initial version complete.&#10;&#10;TODO: refactor linked list at some point to have an iterator. It will make everything much cleaner." />
   </component>
   <component name="WindowStateProjectService">
     <state x="289" y="385" key="#New_File_Extensions" timestamp="1585327258860">
@@ -411,34 +441,34 @@
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state x="604" y="474" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1585429658571" />
-    <state x="174" y="14" width="1526" height="1314" key="CommitChangelistDialog2" timestamp="1586712612974">
+    <state x="174" y="14" width="1526" height="1314" key="CommitChangelistDialog2" timestamp="1586810241862">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state x="174" y="14" width="1526" height="1314" key="CommitChangelistDialog2/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586712612974" />
+    <state x="174" y="14" width="1526" height="1314" key="CommitChangelistDialog2/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586810241862" />
     <state x="0" y="109" width="2048" height="1152" key="DiffContextDialog" timestamp="1586455595500">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state x="0" y="109" width="2048" height="1152" key="DiffContextDialog/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586455595500" />
-    <state width="1608" height="303" key="GridCell.Tab.0.bottom" timestamp="1586716932301">
+    <state width="1513" height="303" key="GridCell.Tab.0.bottom" timestamp="1586797101112">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state width="1525" height="551" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1586437238702" />
-    <state width="1608" height="303" key="GridCell.Tab.0.bottom/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586716932301" />
-    <state width="1608" height="303" key="GridCell.Tab.0.center" timestamp="1586716932300">
+    <state width="1513" height="303" key="GridCell.Tab.0.bottom/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586797101112" />
+    <state width="1513" height="303" key="GridCell.Tab.0.center" timestamp="1586797101110">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state width="1525" height="551" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1586437238701" />
-    <state width="1608" height="303" key="GridCell.Tab.0.center/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586716932300" />
-    <state width="1608" height="303" key="GridCell.Tab.0.left" timestamp="1586716932299">
+    <state width="1513" height="303" key="GridCell.Tab.0.center/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586797101110" />
+    <state width="1513" height="303" key="GridCell.Tab.0.left" timestamp="1586797101109">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state width="1525" height="551" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1586437238700" />
-    <state width="1608" height="303" key="GridCell.Tab.0.left/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586716932299" />
-    <state width="1608" height="303" key="GridCell.Tab.0.right" timestamp="1586716932300">
+    <state width="1513" height="303" key="GridCell.Tab.0.left/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586797101109" />
+    <state width="1513" height="303" key="GridCell.Tab.0.right" timestamp="1586797101111">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state width="1525" height="551" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1586437238702" />
-    <state width="1608" height="303" key="GridCell.Tab.0.right/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586716932300" />
+    <state width="1513" height="303" key="GridCell.Tab.0.right/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586797101111" />
     <state width="1608" height="311" key="GridCell.Tab.1.bottom" timestamp="1586716373418">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
@@ -463,11 +493,11 @@
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state x="694" y="438" key="RollbackChangesDialog/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586455522491" />
-    <state x="266" y="173" width="1257" height="722" key="SettingsEditor" timestamp="1585357444634">
+    <state x="266" y="173" width="1257" height="722" key="SettingsEditor" timestamp="1586810178574">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state x="71" y="96" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1585165766910" />
-    <state x="266" y="173" key="SettingsEditor/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1585357444634" />
+    <state x="266" y="173" key="SettingsEditor/0.0.2560.1440/-1680.0.1680.1050@0.0.2560.1440" timestamp="1586810178574" />
     <state x="71" y="111" width="1257" height="722" key="SettingsEditor/0.23.1680.961@0.23.1680.961" timestamp="1585157643752" />
     <state x="243" y="622" key="VCS.ChangelistChooser" timestamp="1586455389067">
       <screen x="0" y="0" width="2560" height="1440" />

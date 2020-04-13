@@ -34,6 +34,8 @@ class MyLED {
 
  public:
 
+  MyLED() = default;
+
   // Arguments are red, green, and blue pins for LED
   MyLED(uint8_t red_pin, uint8_t green_pin, uint8_t blue_pin);
 
