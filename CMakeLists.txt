@@ -3,6 +3,9 @@ project(a_toolchain_test CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -Wall")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O2 -Wall")
+
 # Radar is just a template header so no build target to link against
 # add_library(Radar libraries/Radar/radar.h)
 # set_target_properties(Radar PROPERTIES LINKER_LANGUAGE CXX)
@@ -36,6 +39,11 @@ include_directories(
         cmake-build-debug/_deps/googletest-src/googlemock/include
         cmake-build-debug/_deps/googletest-src/googletest/include
 )
+
+
+
+target_compile_options(a_toolchain_test PUBLIC "$<$<CONFIG:DEBUG>:${DEBUG_OPTIONS}>")
+target_compile_options(a_toolchain_test PUBLIC "$<$<CONFIG:RELEASE>:${RELEASE_OPTIONS}>")
 
 if(U_UPLOAD)
     target_link_arduino_libraries(a_toolchain_test PRIVATE core)

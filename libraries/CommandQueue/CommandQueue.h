@@ -27,7 +27,7 @@ class CommandQueueEntry {
  private:
   void (*function_)() {nullptr};  // function to be called
   uint32_t  last_call_ {UINT32_MAX};       // time last called as returned by millis()
-  uint8_t  frequency_ {UINT8_MAX};        // how many ms desired between calls
+  uint16_t  frequency_ {UINT16_MAX};        // how many ms desired between calls
 
  public:
   CommandQueueEntry() = default;
@@ -57,11 +57,13 @@ class CommandQueue {
   LinkedList<CommandQueueEntry> queue_;
   CommandQueueEntry* current_command {nullptr};
 
+  uint32_t command_calls_ {0};
+
   void update_current_command_();
 
  public:
 
-  void add_entry(void (*function)(), uint8_t frequency);
+  void add_entry(void (*function)(), uint16_t frequency);
   void remove_entry(void (*function)());
   uint32_t execute_current_entry();
 

@@ -25,14 +25,24 @@
  * you want to add and execute commands in sequence, interleave each add with a
  * call to execute_current_entry().
  */
-void CommandQueue::add_entry(void (*function)(), uint8_t frequency) {
+void CommandQueue::add_entry(void (*function)(), uint16_t frequency) {
 
   using AI = ArduinoInterface;
 
   CommandQueueEntry command;
   command.function_ = function;
   command.frequency_ = frequency;
-  command.last_call_ = AI::millis() - frequency; // makes it due to be called
+
+  command.last_call_ = AI::millis();
+  /*
+  // prevent underflow
+  uint32_t time = AI::millis();
+  if (time > frequency) {
+    command.last_call_ = time - frequency; // makes it due to be called
+  } else {
+    command.last_call_ = 0;
+  } */
+
 
   queue_.insert(command);
 }
@@ -72,17 +82,24 @@ uint32_t CommandQueue::execute_current_entry() {
 
     // do the command
     current_command->function_();
+    ++command_calls_;
+
+    uint32_t current_time = AI::millis();
 
     // save the current time so we know when we called it
-    current_command->last_call_ = AI::millis();
+    current_command->last_call_ = current_time;
 
-    CommandQueueEntry* saved_command = current_command;
+    //CommandQueueEntry* saved_command = current_command;
 
     // get the next command ready for next time we are called
     update_current_command_();
 
+    if (current_time >= (current_command->last_call_ + (uint32_t)current_command->frequency_)) {
+      execute_current_entry();
+    }
+
     // last_call_ + frequency_ is the time the command should be called next
-    return saved_command->last_call_ + saved_command->frequency_;
+    return current_command->last_call_ + (uint32_t)current_command->frequency_;
   } else {
     return 0; // otherwise, there must be no commands!
   }

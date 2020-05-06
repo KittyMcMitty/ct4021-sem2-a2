@@ -8,10 +8,14 @@
 #ifdef UNIT_TEST
 #include "gmock/gmock.h"
 
+// Constants copies from Arduino.h
 #define HIGH 0x1
 #define LOW  0x0
 #define INPUT 0x0
 #define OUTPUT 0x1
+#define CHANGE 1
+#define NOT_AN_INTERRUPT -1
+#define digitalPinToInterrupt(p)  ((p) == 2 ? 0 : ((p) == 3 ? 1 : NOT_AN_INTERRUPT))
 
 /*
  * MockArduinoClass.
@@ -27,10 +31,16 @@ class MockArduinoClass{
  public:
   MOCK_METHOD(void, pinMode, (uint8_t, uint8_t));
   MOCK_METHOD(void, digitalWrite, (uint8_t, uint8_t));
+  MOCK_METHOD(uint8_t , digitalRead, (uint8_t));
   MOCK_METHOD(void, delayMicroseconds, (unsigned int));
   MOCK_METHOD(unsigned long, pulseIn, (uint8_t, uint8_t));
+  MOCK_METHOD(unsigned long, pulseIn, (uint8_t, uint8_t, uint32_t));
   MOCK_METHOD(void, analogueWrite, (uint8_t, uint8_t));
   MOCK_METHOD(uint32_t, millis, ());
+  MOCK_METHOD(uint32_t, micros, ());
+  MOCK_METHOD(void, attachInterrupt, (uint8_t, void (*)(), uint8_t));
+  MOCK_METHOD(void, noInterrupts, ());
+  MOCK_METHOD(void, interrupts, ());
 };
 
 /*
@@ -48,15 +58,20 @@ struct MockArduino {
   static void pinMode(uint8_t pin, uint8_t mode) {
     return mock->pinMode(pin, mode);
   }
-
   static void digitalWrite(uint8_t pin, uint8_t val) {
     mock->digitalWrite(pin, val);
-  };
+  }
+  static uint8_t digitalRead(uint8_t pin) {
+    return mock->digitalRead(pin);
+  }
   static void delayMicroseconds(unsigned int us) {
     mock->delayMicroseconds(us);
-  };
+  }
   static unsigned long pulseIn(uint8_t pin, uint8_t val) {
     return mock->pulseIn(pin, val);
+  }
+  static unsigned long pulseIn(uint8_t pin, uint8_t val, uint32_t timeout) {
+    return mock->pulseIn(pin, val, timeout);
   }
   static void analogueWrite(uint8_t pin, uint8_t val) {
     return mock->analogueWrite(pin,val);
@@ -64,10 +79,23 @@ struct MockArduino {
   static uint32_t millis() {
     return mock->millis();
   }
+  static uint32_t micros() {
+    return mock->micros();
+  }
+  static void attachInterrupt(uint8_t pin, void (*ISR)(), uint8_t mode) {
+    mock->attachInterrupt(pin, ISR, mode);
+  }
+  static void noInterrupts() {
+    mock->noInterrupts();
+  }
+  static void interrupts() {
+    mock->interrupts();
+  }
 };
 
 #else
 #include <Arduino.h>
+#include <new.h>
 
 /*
  * ConcreteArduino
@@ -83,10 +111,13 @@ class ConcreteArduino {
   inline static void digitalWrite(uint8_t pin, uint8_t val) {
     ::digitalWrite(pin, val);
   };
+  inline static uint8_t digitalRead(uint8_t pin) {
+    ::digitalRead(pin);
+  }
   inline static void delayMicroseconds(unsigned int us) {
     ::delayMicroseconds(us);
   };
-  inline static unsigned long pulseIn(uint8_t pin, uint8_t val) {
+  inline static unsigned long pulseIn(uint8_t pin, uint8_t val, uint32_t timeout) {
     return ::pulseIn(pin, val);
   }
   inline static void analogueWrite(uint8_t pin, uint8_t val) {
@@ -95,6 +126,13 @@ class ConcreteArduino {
   inline static uint32_t millis() {
     return ::millis();
   }
+  inline static void attachInterrupt(uint8_t pin, void (*ISR)(), uint8_t mode) {
+    ::attachInterrupt(pin, ISR, mode);
+  }
+  inline static uint32_t micros() {
+    return ::micros();
+  }
+
 };
 
 #endif // UNIT_TEST
@@ -123,11 +161,14 @@ class ArduinoInterface {
   inline static void digitalWrite(uint8_t pin, uint8_t val) {
     AI::digitalWrite(pin, val);
   };
+  inline static uint8_t digitalRead(uint8_t pin) {
+    return AI::digitalRead(pin);
+  }
   inline static void delayMicroseconds(unsigned int us) {
     AI::delayMicroseconds(us);
   };
-  inline static unsigned long pulseIn(uint8_t pin, uint8_t val) {
-    return AI::pulseIn(pin, val);
+  inline static unsigned long pulseIn(uint8_t pin, uint8_t val, uint32_t timeout) {
+    return AI::pulseIn(pin, val, timeout);
   }
   inline static void analogueWrite(uint8_t pin, uint8_t val) {
     return AI::analogueWrite(pin, val);
@@ -135,6 +176,19 @@ class ArduinoInterface {
   inline static uint32_t millis() {
     return AI::millis();
   }
+  inline static uint32_t micros() {
+    return AI::micros();
+  }
+  inline static void attachInterrupt(uint8_t pin, void (*ISR)(), uint8_t mode) {
+    AI::attachInterrupt(pin, ISR, mode);
+  }
+  inline static void noInterrupts() {
+    AI::noInterrupts();
+  }
+  inline static void interrupts() {
+    AI::interrupts();
+  }
+
 };
 
 #endif //A_TOOLCHAIN_TEST_INCLUDE_ARDUINOINTERFACE_H_

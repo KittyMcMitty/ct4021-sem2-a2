@@ -9,25 +9,22 @@
 
 namespace CT4009a2 {
 namespace CFG {
-// refactor this later to use #define. Does it use more memory? Does compiler optimise away?
-// PROGMEM macro stores these constants on flash rather than in SRAM
 
+// PROGMEM macro stores these constants on flash rather than in SRAM
 // Radar pins
-const uint8_t trigger_pin PROGMEM = 11, echo_pin PROGMEM = 12,
+const uint8_t trigger_pin PROGMEM = A1, echo_pin = 3,
     servo_pin PROGMEM = 9;
 
 // LCD pins
-const uint8_t d4 PROGMEM = 5, d5 PROGMEM = 4, d6 PROGMEM = 3, d7 PROGMEM = 2,
-    rs PROGMEM = 10, en PROGMEM = 10;
+const uint8_t d4 PROGMEM = 8, d5 PROGMEM = 7, d6 PROGMEM = 4, d7 PROGMEM = 2,
+    rs PROGMEM = 13, en PROGMEM = 12;
 
 // IR sensor
-const uint8_t ir_pin PROGMEM = 7;
+const uint8_t ir_pin PROGMEM = 11;
 
 // LED pins
-const uint8_t red_pin PROGMEM = 3, green_pin PROGMEM = 5, blue_pin PROGMEM = 6;
+const uint8_t red_pin PROGMEM = 10, green_pin PROGMEM = 6, blue_pin PROGMEM = 5;
 } // namespace CFG
-
-volatile bool ir_trigger = false; // volatile as changed by ISR
 
 Radar<Servo> radar;
 MyLED my_led(CFG::red_pin, CFG::green_pin, CFG::blue_pin);
@@ -37,10 +34,10 @@ CommandQueue queue;
 // forward declare all this stuff. Maybe move all this into seperate file?
 void move_radar();
 void standby_pulse_led();
-void pir_interrupt_callback();
 void sense_distance();
 void init_mode_sensing();
 void init_mode_standby();
+
 
 void move_radar() {
   radar.move();
@@ -48,17 +45,19 @@ void move_radar() {
 
 void standby_pulse_led() {
   my_led.pulse();
-  if (ir_trigger == true) {
+  uint8_t pir_sensor = digitalRead(CFG::ir_pin);
+
+  if (pir_sensor) {
     init_mode_sensing();
   }
 }
 
-void pir_interrupt_callback() {
-  ir_trigger = true;
-}
-
 void sense_distance() {
   uint32_t distance = radar.ping();
+
+  lcd.setCursor(0,1);
+  lcd.print("D: ");
+  lcd.print(distance);
 
   if (distance < 500) {
     my_led.set_colour(LEDColour::RED);
@@ -71,34 +70,78 @@ void sense_distance() {
 
 void init_mode_sensing() {
   queue.remove_entry(standby_pulse_led);
-  queue.add_entry(move_radar, 15);
-  queue.add_entry(sense_distance, 100);
-  detachInterrupt(digitalPinToInterrupt(CFG::ir_pin));
+  queue.add_entry(move_radar, 50);
+  queue.add_entry(sense_distance, 550);
+
+  my_led.set_pulse(200);
+
 }
 
 void init_mode_standby() {
-  queue.remove_entry(move_radar);
-  queue.remove_entry(sense_distance);
+  //queue.add_entry(move_radar, 30);
+  //queue.remove_entry(sense_distance);
   my_led.set_colour(LEDColour::GREEN);
-  my_led.set_pulse(51);
-  queue.add_entry(standby_pulse_led, 200);
-  attachInterrupt(digitalPinToInterrupt(CFG::ir_pin), pir_interrupt_callback, RISING);
+  my_led.set_pulse(6);
+  queue.add_entry(standby_pulse_led, 20);
 }
-
 
 } // namespace CT4009a2
+
+
 void setup() {
   using CT4009a2::radar;
+  using CT4009a2::lcd;
+
   Serial.begin(9600);
   radar.init(CT4009a2::CFG::trigger_pin, CT4009a2::CFG::echo_pin, CT4009a2::CFG::servo_pin);
+  lcd.begin(16,2);
+
   CT4009a2::init_mode_standby();
+  lcd.clear();
 }
 
-void loop() {
-  using CT4009a2::queue;
-  uint32_t time_to_wait = queue.execute_current_entry();
+uint32_t loop_count {0};
+uint16_t i_call {0};
 
-  delay(time_to_wait);
+void loop() {
+
+  using CT4009a2::queue;
+  using CT4009a2::lcd;
+
+  uint32_t next_time = queue.execute_current_entry();
+  uint32_t current_time = millis();
+
+  // if current time is less than next time, just do the next command immediately
+  next_time -= (current_time < next_time) ? current_time : next_time;
+
+  if (EchoISR::i_flag) {
+    ++i_call;
+    EchoISR::i_flag = false;
+  }
+
+  ++loop_count;
+  lcd.setCursor(0,0);
+  lcd.print("L:");
+  lcd.print(loop_count);
+  lcd.print("I:");
+  lcd.print(i_call);
+
+  /*uint8_t input = digitalRead(CT4009a2::CFG::ir_pin);
+
+  if (input == 0) {
+    lcd.print("false: ");
+    lcd.print(input);
+  } else {
+    lcd.print("true:");
+    lcd.print(input);
+  } */
+
+  lcd.print("N:");
+  lcd.print(next_time);
+  next_time -= (next_time!=0) ? 1 : 0;
+
+  // delay 1ms less than the next time (unless next time is 0) so we're never late
+  delay(next_time);
 }
 
 
