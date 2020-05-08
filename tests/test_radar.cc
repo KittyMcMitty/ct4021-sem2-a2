@@ -38,6 +38,7 @@ class RadarTest : public ::testing::Test {
 };
 
 TEST_F(RadarTest, InitTest) {
+  using ::testing::_;
 
   // Does Servo.attach() get called with servo pin?
   EXPECT_CALL(mock_servo_, attach(servo_))
@@ -53,6 +54,9 @@ TEST_F(RadarTest, InitTest) {
 
   // Does the trigger pin get set to output?
   EXPECT_CALL(mock_arduino_class_, pinMode(trigger_, OUTPUT))
+      .Times(1);
+
+  EXPECT_CALL(mock_arduino_class_, attachInterrupt(_, _, _))
       .Times(1);
 
   radar_.init(trigger_, echo_, servo_);
@@ -101,8 +105,6 @@ TEST_F(RadarTest, PingTest) {
   // All calls must be in sequence.
   Sequence s1;
 
-  unsigned long value {10000}, return_value {0}, expected_value {0};
-
   // Do we get LOW write to trigger?
   EXPECT_CALL(mock_arduino_class_, digitalWrite(trigger_, LOW))
         .InSequence(s1);
@@ -123,12 +125,11 @@ TEST_F(RadarTest, PingTest) {
   EXPECT_CALL(mock_arduino_class_, digitalWrite(trigger_, LOW))
       .InSequence(s1);
 
-  EXPECT_CALL(mock_arduino_class_, pulseIn(echo_, HIGH))
-      .InSequence(s1)
-      .WillOnce(Return(value));
+  EXPECT_CALL(mock_arduino_class_, noInterrupts())
+      .Times(1);
 
-  return_value = radar_.ping();
-  expected_value = value * SPEED_OF_SOUND / 2;
+  EXPECT_CALL(mock_arduino_class_, interrupts())
+      .Times(1);
 
-  ASSERT_EQ(return_value, expected_value);
+  radar_.ping();
 }
