@@ -89,60 +89,9 @@ class Radar
       //attach_echo_isr_();
   };
 
-  ~Radar() {
-    //delete servo_;
-  }
-
-  /*
-   * Init - initialise radar object
-   *
-   * Arguments:
-   *
-   * uint8_t trigger_pin  - Trigger pin on ultrasonic sensor
-   * uint8_t echo_pin     - Echo pin on ultrasonic sensor
-   * uint8_t servo_pin    - Pin used by servo motor
-   */
-  void init(uint8_t trigger_pin, uint8_t echo_pin, uint8_t servo_pin) {
-
-    using AI = ArduinoInterface;
-
-    trigger_pin_ = trigger_pin; // save trigger and echo for ultrasonic sensor
-    EchoISR::echo_pin_ = echo_pin;
-
-    AI::pinMode(trigger_pin_, OUTPUT); // set the pin modes for sensor
-    AI::pinMode(EchoISR::echo_pin_, INPUT);
-
-    attach_echo_isr_();
-
-    servo_->attach(servo_pin); // attach servo
-
-    servo_->write(servo_angle_); // set servo initial position
-  };
-
-  /*
-   * Move - move the servo
-   *
-   * This method moves the servo by 1° with each call. When maximum rotation is
-   * attained, the angle will reverse and subsequent calls will increment the
-   * servo in the opposite direction.
-   */
-  uint8_t move() {
-    // if servo is at minimum angle...
-    if (servo_angle_ == 0) {
-      // start turning right
-      direction_ = radar_r_;
-    } else if (servo_angle_ == 180) { // maximum angle
-      // start turning left
-      direction_ = radar_l_;
-    }
-
-    servo_angle_ += direction_;
-    servo_->write(servo_angle_);
-
-    return servo_angle_;
-  };
-
-  uint32_t ping();
+  void init(uint8_t trigger_pin, uint8_t echo_pin, uint8_t servo_pin);
+  uint8_t   move();
+  uint32_t  ping();
 };
 
 /*
@@ -192,6 +141,7 @@ uint32_t Radar<ServoInterface>::ping() {
 
   return distance;
 }
+
 template<class ServoInterface>
 inline void Radar<ServoInterface>::attach_echo_isr_() {
   using namespace EchoISR;
@@ -199,5 +149,58 @@ inline void Radar<ServoInterface>::attach_echo_isr_() {
   AI::attachInterrupt(digitalPinToInterrupt(echo_pin_), echo_isr, CHANGE);
   EchoISR::i_flag = true;
 }
+
+/*
+ * Move - move the servo
+ *
+ * This method moves the servo by 1° with each call. When maximum rotation is
+ * attained, the angle will reverse and subsequent calls will increment the
+ * servo in the opposite direction.
+ */
+template<class ServoInterface>
+uint8_t Radar<ServoInterface>::move()  {
+  // if servo is at minimum angle...
+  if (servo_angle_ == 0) {
+    // start turning right
+    direction_ = radar_r_;
+  } else if (servo_angle_ == 180) { // maximum angle
+    // start turning left
+    direction_ = radar_l_;
+  }
+
+  servo_angle_ += direction_;
+  servo_->write(servo_angle_);
+
+  return servo_angle_;
+}
+
+/*
+ * Init - initialise radar object
+ *
+ * Arguments:
+ *
+ * uint8_t trigger_pin  - Trigger pin on ultrasonic sensor
+ * uint8_t echo_pin     - Echo pin on ultrasonic sensor
+ * uint8_t servo_pin    - Pin used by servo motor
+ */
+template<class ServoInterface>
+void Radar<ServoInterface>::init(uint8_t trigger_pin,
+                                 uint8_t echo_pin,
+                                 uint8_t servo_pin) {
+
+  using AI = ArduinoInterface;
+
+  trigger_pin_ = trigger_pin; // save trigger and echo for ultrasonic sensor
+  EchoISR::echo_pin_ = echo_pin;
+
+  AI::pinMode(trigger_pin_, OUTPUT); // set the pin modes for sensor
+  AI::pinMode(EchoISR::echo_pin_, INPUT);
+
+  attach_echo_isr_();
+
+  servo_->attach(servo_pin); // attach servo
+
+  servo_->write(servo_angle_); // set servo initial position
+};
 
 #endif
