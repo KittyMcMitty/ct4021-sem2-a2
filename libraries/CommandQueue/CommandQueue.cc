@@ -89,8 +89,6 @@ uint32_t CommandQueue::execute_current_entry() {
     // save the current time so we know when we called it
     current_command->last_call_ = current_time;
 
-    //CommandQueueEntry* saved_command = current_command;
-
     // get the next command ready for next time we are called
     update_current_command_();
 
@@ -105,7 +103,7 @@ uint32_t CommandQueue::execute_current_entry() {
   }
 }
 
-/* TODO: finish this method
+/*
  * Update Current Command
  *
  * Traverse list to get the next command. This sets the class member
@@ -113,23 +111,15 @@ uint32_t CommandQueue::execute_current_entry() {
  */
 void CommandQueue::update_current_command_() {
 
-  queue_.reset_iterate();
-  CommandQueueEntry* new_command = queue_.iterate();;  // new command to save and compare
-
-  if (current_command == nullptr) {
-    current_command = new_command;
-  }
-
-  // while we're not at the end
-  while (new_command != nullptr) {
-
-    // if its due sooner, save it.
-    if (*new_command < *current_command) {
-      current_command = new_command;
+  for (auto entry : queue_) {
+    if (current_command != nullptr) {
+      if (*entry < *current_command) {
+        current_command = entry;
+      }
+    } else {
+      current_command = entry;
     }
 
-    // get a new command
-    new_command = queue_.iterate();
   }
 }
 

@@ -41,17 +41,69 @@ class ListNode {
 template<typename T>
 class LinkedList {
 
+  class Iterator {
+   private:
+    ListNode<T>* node_ {nullptr};
+
+   public:
+    explicit Iterator(ListNode<T>* n) {
+      node_ = n;
+    };
+
+    /*
+     * == Operator
+     *
+     * Just test equality of both pointers
+     */
+    inline bool operator==(const Iterator& rhs) const {
+      return this->node_ == rhs.node_;
+    };
+
+    /*
+     * != Operator
+     */
+    inline bool operator!=(const Iterator& rhs) const {
+      return !this->operator==(rhs);
+    };
+
+    /*
+     * Pre-increment operator
+     */
+    inline Iterator& operator++() {
+      node_ = node_->next_;
+      return *this;
+    };
+
+    /*
+     * Post-increment operator
+     */
+    inline Iterator operator++(int) {
+      auto tmp_node = node_;
+      ++*this;
+      return tmp_node;
+    };
+
+    /*
+     * * Operator
+     *
+     * This returns the data referenced by the iterator
+     */
+    inline T* operator*() {
+      return &node_->data_;
+    };
+  };
+
  private:
-  ListNode<T> *head_{nullptr};
-  ListNode<T> *tail_{nullptr};
-  ListNode<T> *iterate_ptr_{head_}; //used by iterator methods / operators
+  ListNode<T>* head_{nullptr};
 
  public:
   ~LinkedList();
   void insert(T data);
   void remove(T data);
-  T* iterate();
-  void reset_iterate();
+
+
+  Iterator begin() { return Iterator(head_); };
+  Iterator end() { return Iterator(nullptr); };
 
 };
 
@@ -93,7 +145,6 @@ void LinkedList<T>::insert(T data) {
   } else {
     auto node = new ListNode<T>(data, nullptr);
     head_ = node;
-    //iterate_ptr_ = node; // stop iterate_ptr_ from being null
   }
 }
 
@@ -130,46 +181,6 @@ void LinkedList<T>::remove(T data) {
       current_ptr = current_ptr->next_;
     }
   }
-}
-
-
-/*
- * Iterate - iterates over the list
- *
- * This will return the data from the current list node and then advance
- * iterate_ptr to the next node in the list. If iterate_ptr is nullptr, reset
- * iterate_ptr back to head_ and return null so the caller knows the end
- * is nigh.
- *
- * Of note: items added to the list while it is iterating won't be returned
- * until the next iteration round, as they are inserted at the head.
- */
-template<typename T>
-T* LinkedList<T>::iterate() {
-  // if we aren't at the end of the list
-  if (iterate_ptr_ != nullptr) {
-    ListNode<T>* old_ptr = iterate_ptr_;  // save current pointer
-    iterate_ptr_ = iterate_ptr_->next_;   // advance iterator
-    return &old_ptr->data_;                // return saved data
-
-  } else {
-    iterate_ptr_ = head_; // reset iterator back to head
-    return nullptr; // return nullptr
-  }
-}
-
-/*
- * Reset iterate - reset the iterate pointer
- *
- * This will reset the iterator to the start of the list. The caller can call
- * this method to know they are getting the start, as iterate will eventually
- * return a nullptr to signal the end.
- *
- * TODO: refactor iteration out into a separate iterator class
- */
-template<typename T>
-void LinkedList<T>::reset_iterate() {
-  iterate_ptr_ = head_;
 }
 
 #endif //A_TOOLCHAIN_TEST_LIBRARIES_LINKEDLIST_LINKEDLIST_H_
