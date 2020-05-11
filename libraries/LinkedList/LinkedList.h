@@ -77,7 +77,7 @@ class LinkedList {
     /*
      * Post-increment operator
      */
-    inline Iterator operator++(int) {
+    inline const Iterator operator++(int) const {
       auto tmp_node = node_;
       ++*this;
       return tmp_node;
@@ -171,12 +171,12 @@ void LinkedList<T>::remove(T data) {
         delete current_ptr;
         break; // break out of loop here
 
-      } else {
+      } else { // snip current entry out of the list
         old_ptr->next_ = current_ptr->next_;
         delete current_ptr;
         break;
       }
-    } else {
+    } else { // carry on looking
       old_ptr = current_ptr;
       current_ptr = current_ptr->next_;
     }

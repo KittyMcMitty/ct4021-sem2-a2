@@ -31,7 +31,7 @@ MyLED my_led(CFG::red_pin, CFG::green_pin, CFG::blue_pin);
 LiquidCrystal lcd(CFG::rs, CFG::en, CFG::d4, CFG::d5, CFG::d6, CFG::d7);
 CommandQueue queue;
 
-// forward declare all this stuff. Maybe move all this into seperate file?
+// forward declare all this stuff. Maybe move all this into separate file?
 void move_radar();
 void standby_pulse_led();
 void sense_distance();
@@ -138,7 +138,7 @@ void loop() {
 
   lcd.print("N:");
   lcd.print(next_time);
-  next_time -= (next_time!=0) ? 1 : 0;
+  next_time -= (next_time!=0) ? 1 : 0; // come back 1ms early so we're not late
 
   // delay 1ms less than the next time (unless next time is 0) so we're never late
   delay(next_time);

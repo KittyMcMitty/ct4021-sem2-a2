@@ -6,10 +6,27 @@
 #include <CommandQueue.h>
 #include <ArduinoInterface.h>
 
-void function_a();
-void function_b();
+//void function_a();
+//void function_b();
 bool a_result = false;
 bool b_result = false;
+
+class FunctorA : public FunctionObject {
+ public:
+  void operator()() {
+    a_result = true;
+  }
+};
+
+class FunctorB : public FunctionObject {
+ public:
+  void operator()() {
+    b_result = true;
+  }
+};
+
+FunctorA function_a;
+FunctorB function_b;
 
  class CommandQueueEntryTest : public ::testing::Test {
  protected:
@@ -43,6 +60,7 @@ class CommandQueueTest : public CommandQueueEntryTest {
 };
 
 
+/*
 void function_a() {
   a_result = true;
 }
@@ -50,6 +68,7 @@ void function_a() {
 void function_b() {
   b_result = true;
 }
+*/
 
 // CommandQueue tests
 
@@ -63,7 +82,7 @@ TEST_F(CommandQueueTest, TestAddAndExecute) {
       .Times(2)
       .WillRepeatedly(Return(millis_time));;
 
-  queue_.add_entry(function_a, frequency_a_);
+  queue_.add_entry(&function_a, frequency_a_);
   returned_time = queue_.execute_current_entry();
 
   ASSERT_EQ(a_result, true);
@@ -85,12 +104,12 @@ TEST_F(CommandQueueTest, TestMultipleAddAndExecute) {
   ON_CALL(mock_arduino_, millis())
       .WillByDefault(Return(millis_time_a));
 
-  queue_.add_entry(function_a, frequency_a_);
+  queue_.add_entry(&function_a, frequency_a_);
 
   ON_CALL(mock_arduino_, millis())
       .WillByDefault(Return(millis_time_b));
 
-  queue_.add_entry(function_b, frequency_b_);
+  queue_.add_entry(&function_b, frequency_b_);
 
   ON_CALL(mock_arduino_, millis())
       .WillByDefault(Return(millis_time_c));
@@ -117,10 +136,10 @@ TEST_F(CommandQueueTest, TestAddAndRemove) {
       .Times(4)
       .WillRepeatedly(Return(millis_time));
 
-  queue_.add_entry(function_a, frequency_a_);
-  queue_.add_entry(function_b, frequency_b_);
+  queue_.add_entry(&function_a, frequency_a_);
+  queue_.add_entry(&function_b, frequency_b_);
 
-  queue_.remove_entry(function_a);
+  queue_.remove_entry(&function_a);
 
   returned_time = queue_.execute_current_entry();
   ASSERT_EQ(returned_time, millis_time + frequency_b_);

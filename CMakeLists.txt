@@ -28,8 +28,25 @@ add_library(
         libraries/LinkedList/LinkedList.h
 )
 
-add_executable(a_toolchain_test src/main.cpp include/ArduinoInterface.h include/new.h src/new.cc)
-add_executable(unit_tests tests/test_radar.cc tests/test_led.cc tests/test_linked_list.cc tests/test_command_queue.cc)
+add_executable(a_toolchain_test
+        src/main.cpp
+        include/ArduinoInterface.h
+        include/new.h
+        src/new.cc
+        src/RadarState.cc
+        include/RadarState.h
+        include/FunctionObject.h)
+
+add_executable(unit_tests
+        tests/test_radar.cc
+        tests/test_led.cc
+        tests/test_linked_list.cc
+        tests/test_command_queue.cc
+        tests/test_radar_context.cc
+        src/RadarState.cc
+        include/RadarState.h
+        include/RadarStateMocks.h
+        include/FunctionObject.h)
 
 target_link_libraries(unit_tests gmock_main gtest MyLED CommandQueue)
 

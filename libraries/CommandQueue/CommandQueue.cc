@@ -25,7 +25,7 @@
  * you want to add and execute commands in sequence, interleave each add with a
  * call to execute_current_entry().
  */
-void CommandQueue::add_entry(void (*function)(), uint16_t frequency) {
+void CommandQueue::add_entry(FunctionObject* function, uint16_t frequency) {
 
   using AI = ArduinoInterface;
 
@@ -48,7 +48,7 @@ void CommandQueue::add_entry(void (*function)(), uint16_t frequency) {
 }
 
 //
-void CommandQueue::remove_entry(void (*function)()) {
+void CommandQueue::remove_entry(FunctionObject* function) {
 
   // make a queue entry
   CommandQueueEntry entry;
@@ -81,7 +81,7 @@ uint32_t CommandQueue::execute_current_entry() {
   if (current_command->function_ != nullptr) {
 
     // do the command
-    current_command->function_();
+    (*current_command->function_)();
     ++command_calls_;
 
     uint32_t current_time = AI::millis();

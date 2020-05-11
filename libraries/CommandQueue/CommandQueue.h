@@ -7,6 +7,7 @@
 
 #include <ArduinoInterface.h>
 #include <LinkedList.h>
+#include <FunctionObject.h>
 
 /*
  * CommandQueueEntry - an entry for the Command Queue
@@ -25,18 +26,19 @@ class CommandQueueEntry {
   friend class CommandQueue;
 
  private:
-  void (*function_)() {nullptr};  // function to be called
+  FunctionObject* function_;
+  //void (*function_)() {nullptr};  // function to be called
   uint32_t  last_call_ {UINT32_MAX};       // time last called as returned by millis()
   uint16_t  frequency_ {UINT16_MAX};        // how many ms desired between calls
 
  public:
   CommandQueueEntry() = default;
 
-  CommandQueueEntry(void (*function)(), uint32_t last_call, uint8_t frequency) {
-    function_ = function;
-    last_call_ = last_call;
-    frequency_ = frequency;
-  };
+  CommandQueueEntry(
+      FunctionObject* function,
+      uint32_t last_call,
+      uint8_t frequency
+      ) : function_ {function}, last_call_{last_call}, frequency_{frequency} {};
 
   // comparison operators
   bool operator==(const CommandQueueEntry& rhs) const;
@@ -63,8 +65,8 @@ class CommandQueue {
 
  public:
 
-  void add_entry(void (*function)(), uint16_t frequency);
-  void remove_entry(void (*function)());
+  void add_entry(FunctionObject* function, uint16_t frequency);
+  void remove_entry(FunctionObject* function);
   uint32_t execute_current_entry();
 
 
