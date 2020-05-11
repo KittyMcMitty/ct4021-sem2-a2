@@ -4,7 +4,7 @@
 
 #ifndef A_TOOLCHAIN_TEST_INCLUDE_RADARSTATEMOCKS_H_
 #define A_TOOLCHAIN_TEST_INCLUDE_RADARSTATEMOCKS_H_
-
+#ifdef UNIT_TEST
 #include <gmock/gmock.h>
 #include <FunctionObject.h>
 //#include <LiquidCrystal.h>
@@ -37,7 +37,7 @@ class MockMyLED {
   MOCK_METHOD(void, pulse, ());
 };
 
-class MockLiquidCrystal  {
+class MockLiquidCrystal {
  public:
   MOCK_METHOD(void, LiquidCrystal, (uint8_t, uint8_t, uint8_t, uint8_t,
       uint8_t, uint8_t));
@@ -46,7 +46,7 @@ class MockLiquidCrystal  {
   MOCK_METHOD(void, clear, ());
 };
 
-class MockRadarContext  {
+class MockRadarContext {
  public:
   MOCK_METHOD(void, change_state, ());
 };
@@ -120,5 +120,5 @@ class LiquidCrystalMockInterface {
     mock_lcd_->clear();
   }
 };
-
+#endif //UNIT_TEST
 #endif //A_TOOLCHAIN_TEST_INCLUDE_RADARSTATEMOCKS_H_

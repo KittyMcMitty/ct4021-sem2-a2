@@ -28,6 +28,11 @@ add_library(
         libraries/LinkedList/LinkedList.h
 )
 
+add_library(radar
+        libraries/Radar/radar.cc
+        libraries/Radar/radar.h
+)
+
 add_executable(a_toolchain_test
         src/main.cpp
         include/ArduinoInterface.h
@@ -69,7 +74,7 @@ if(U_UPLOAD)
     target_link_arduino_libraries(a_toolchain_test PRIVATE LiquidCrystal)
     target_link_arduino_libraries(a_toolchain_test PRIVATE MyLED)
     target_link_arduino_libraries(a_toolchain_test PRIVATE CommandQueue)
-    # target_link_arduino_libraries(a_toolchain_test PRIVATE Radar)
+    target_link_arduino_libraries(a_toolchain_test PRIVATE Radar)
 
     target_enable_arduino_upload(a_toolchain_test)
 

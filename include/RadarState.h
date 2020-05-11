@@ -74,8 +74,8 @@ class RadarContext {
 
   
   void change_state(RadarState* s);
-  void command_add_entry();
-  void command_remove_entry();
+  void command_add_entry(FunctionObject *func, uint16_t frequency);
+  void command_remove_entry(FunctionObject *func);
   void led_set_colour(LEDColour colour);
   void led_set_pulse(int8_t  increment);
   void lcd_setCursor(uint8_t row, uint8_t col);
@@ -102,8 +102,10 @@ class RadarState {
   static void change_state(RadarContext* c, RadarState* s);
   static void radar_move(RadarContext* c);
   static uint32_t radar_ping(RadarContext* c);
-  static void command_add_entry(RadarContext* c);
-  static void command_remove_entry(RadarContext* c);
+  static void command_add_entry(RadarContext *c,
+                                FunctionObject *func,
+                                uint16_t frequency);
+  static void command_remove_entry(RadarContext *c, FunctionObject *func);
   static void led_set_colour(RadarContext* c, LEDColour colour);
   static void led_set_pulse(RadarContext* c, int8_t  increment);
   static void led_pulse(RadarContext* c);
@@ -119,7 +121,6 @@ class RadarState {
   virtual ~RadarState() = default;
 
   virtual void start(RadarContext *c) = 0;
-  virtual void stop() = 0;
   virtual void update(RadarContext *c, uint32_t input) = 0;
 };
 
@@ -134,7 +135,6 @@ class StandbyState : public RadarState {
   ~StandbyState() override = default;
   static RadarState* instance();
   void start(RadarContext *c) override;
-  void stop() override;
   void update(RadarContext *c, uint32_t input) override;
 };
 
@@ -142,12 +142,13 @@ class SensingState : public RadarState {
  private:
   inline static RadarState* instance_;
   SensingState() = default;
+  static void change_standby(RadarContext* c);
+  static void change_warning(RadarContext* c);
 
  public:
   ~SensingState() override = default;
   static RadarState* instance();
   void start(RadarContext *c) override;
-  void stop() override;
   void update(RadarContext *c, uint32_t input) override;
 };
 
@@ -161,7 +162,6 @@ class WarningState : public RadarState {
   ~WarningState() override = default;
   static RadarState* instance();
   void start(RadarContext *c) override;
-  void stop() override;
   void update(RadarContext *c, uint32_t input) override;
 };
 

@@ -12,10 +12,10 @@
 
 // These globals are needed for the ping echo ISR
 namespace EchoISR {
-volatile uint32_t pulse_start_  {0};
-volatile uint32_t pulse_end_    {0};
-volatile bool i_flag {false};
-uint8_t echo_pin_               {0};  // echo pin for sensor
+extern volatile uint32_t pulse_start_ ;
+extern volatile uint32_t pulse_end_;
+extern volatile bool i_flag;
+extern uint8_t echo_pin_;  // echo pin for sensor
 
 /*
  * Echo ISR
@@ -24,18 +24,7 @@ uint8_t echo_pin_               {0};  // echo pin for sensor
  * The ping method can then do the slower work of figuring out how long it took
  * and returning a value.
  */
-void echo_isr() {
-  using AI = ArduinoInterface;
-
-  i_flag = true;
-
-  // if the pin is set high
-  if (AI::digitalRead(echo_pin_) == HIGH) {
-    pulse_start_ = AI::micros(); // get the start time
-  } else {
-    pulse_end_ = AI::micros(); // else get the end time
-  }
-}
+void echo_isr();
 
 } // namespace EchoISR
 
@@ -114,7 +103,7 @@ uint32_t Radar<ServoInterface>::ping() {
   // we're doing this at the start because when we pulse the trigger right after
   // there will definitely be an interrupt shortly afterwards
   uint32_t distance = 0;
-  AI::noInterrupts();
+  noInterrupts();
   // if we have times for both of these
   if ((pulse_start_ && pulse_end_) != 0){
     // micros() rolls over every 70mins roughly, so check for that
@@ -128,7 +117,7 @@ uint32_t Radar<ServoInterface>::ping() {
     pulse_start_ = 0;
     pulse_end_ = 0;
   }
-  AI::interrupts(); // and turn them back on
+  interrupts(); // and turn them back on
 
   // make sure trigger is off...
   AI::digitalWrite(trigger_pin_, LOW);

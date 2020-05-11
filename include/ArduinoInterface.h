@@ -151,6 +151,9 @@ class ConcreteArduino {
   inline static uint32_t micros() {
     return ::micros();
   }
+  inline static void tone(uint8_t pin, uint16_t frequency, uint32_t duration = 0) {
+    ::tone(pin, frequency, duration);
+  }
 
 };
 
@@ -201,11 +204,8 @@ class ArduinoInterface {
   inline static void attachInterrupt(uint8_t pin, void (*ISR)(), uint8_t mode) {
     AI::attachInterrupt(pin, ISR, mode);
   }
-  inline static void noInterrupts() {
-    AI::noInterrupts();
-  }
-  inline static void interrupts() {
-    AI::interrupts();
+  inline static void tone(uint8_t pin, uint16_t frequency, uint32_t duration = 0) {
+    AI::tone(pin, frequency, duration);
   }
 
 };

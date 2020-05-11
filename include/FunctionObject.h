@@ -8,6 +8,7 @@
 class FunctionObject {
  public:
   virtual void operator()() {};
+  virtual ~FunctionObject() = default;
 };
 
 #endif //A_TOOLCHAIN_TEST_INCLUDE_FUNCTIONOBJECT_H_
