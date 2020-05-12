@@ -131,7 +131,7 @@ class ConcreteArduino {
     ::digitalWrite(pin, val);
   };
   inline static uint8_t digitalRead(uint8_t pin) {
-    ::digitalRead(pin);
+    return ::digitalRead(pin);
   }
   inline static void delayMicroseconds(unsigned int us) {
     ::delayMicroseconds(us);
@@ -153,6 +153,9 @@ class ConcreteArduino {
   }
   inline static void tone(uint8_t pin, uint16_t frequency, uint32_t duration = 0) {
     ::tone(pin, frequency, duration);
+  }
+  inline static void noTone(uint8_t pin) {
+    ::noTone(pin);
   }
 
 };
@@ -207,7 +210,9 @@ class ArduinoInterface {
   inline static void tone(uint8_t pin, uint16_t frequency, uint32_t duration = 0) {
     AI::tone(pin, frequency, duration);
   }
-
+  inline static void noTone(uint8_t pin) {
+    AI::noTone(pin);
+  }
 };
 
 #endif //A_TOOLCHAIN_TEST_INCLUDE_ARDUINOINTERFACE_H_
