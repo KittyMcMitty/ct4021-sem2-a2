@@ -58,6 +58,9 @@ void CommandQueue::remove_entry(FunctionObject* function) {
 
   // now we can compare it to existing entries for deletion
   queue_.remove(entry);
+
+  // if we just deleted the current command, set it to nullptr
+  current_command = nullptr;
 }
 
 /*
@@ -82,7 +85,8 @@ uint32_t CommandQueue::execute_current_entry() {
 
     // do the command
     (*current_command->function_)();
-    ++command_calls_;
+   // ++command_calls_;
+
 
     uint32_t current_time = AI::millis();
 

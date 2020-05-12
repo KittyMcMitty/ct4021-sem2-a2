@@ -59,7 +59,7 @@ class CommandQueue {
   LinkedList<CommandQueueEntry> queue_;
   CommandQueueEntry* current_command {nullptr};
 
-  uint32_t command_calls_ {0};
+  //uint32_t command_calls_ {0};
 
   void update_current_command_();
 
