@@ -90,16 +90,21 @@ uint32_t CommandQueue::execute_current_entry() {
 
     uint32_t current_time = AI::millis();
 
-    // save the current time so we know when we called it
-    current_command->last_call_ = current_time;
+    // check we didn't change states in previous command. Dereferencing nullptr
+    // is undefined, so don't do it!
+    if (current_command !=nullptr) {
+      // save the current time so we know when we called it
+      current_command->last_call_ = current_time;
+    }
+
 
     // get the next command ready for next time we are called
     update_current_command_();
-
+    /*
     if (current_time >= (current_command->last_call_ + (uint32_t)current_command->frequency_)) {
       execute_current_entry();
     }
-
+*/
     // last_call_ + frequency_ is the time the command should be called next
     return current_command->last_call_ + (uint32_t)current_command->frequency_;
   } else {
