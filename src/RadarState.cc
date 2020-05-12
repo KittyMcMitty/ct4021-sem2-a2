@@ -54,6 +54,9 @@ class DoPing : public RadarAction {
   }
   void operator()() override {
     uint32_t distance = context_->radar_ping();
+    context_->lcd_setCursor(0, 1);
+    context_->lcd_print("Distance: ");
+    context_->lcd_print(distance);
     context_->update(distance);
   }
 };
@@ -81,6 +84,7 @@ class DoLEDPulse : public RadarAction {
 class DoPIRCheck : RadarAction {
  private:
   inline static RadarAction* instance_ {nullptr};
+  uint32_t count {0};;
   explicit DoPIRCheck(RadarContext* c) : RadarAction(c) {};
 
  public:
@@ -94,7 +98,16 @@ class DoPIRCheck : RadarAction {
   void operator()() override {
     using AI = ArduinoInterface;
     uint8_t sensor = AI::digitalRead(CFG::ir_pin);
+    count += 1;
+    context_->lcd_setCursor(0, 0);
+    context_->lcd_print("Sensor: ");
+    context_->lcd_print(sensor);
+    context_->lcd_setCursor(0,1);
+    context_->lcd_print("Count: ");
+    context_->lcd_print(count);
+
     if (sensor) {
+      count = 0;
       context_->update(1);
     }
   }
@@ -107,7 +120,7 @@ class DoPIRCheck : RadarAction {
 
 // Set initial state to standby
 RadarContext::RadarContext() {
-  state_ = StandbyState::instance();
+  change_state(StandbyState::instance());
 }
 
 // During normal operation, all these state objects will be made.
@@ -119,6 +132,7 @@ RadarContext::~RadarContext() {
 
 void RadarContext::change_state(RadarState *state) {
   state_ = state;
+  state_->start(this);
 }
 
 void RadarContext::start() {
@@ -156,18 +170,29 @@ void RadarContext::led_set_pulse(int8_t increment) {
 void RadarContext::led_pulse() {
   led_.pulse();
 }
-void RadarContext::lcd_setCursor(uint8_t row, uint8_t col) {
-  lcd_.setCursor(row, col);
+void RadarContext::lcd_setCursor(uint8_t col, uint8_t row) {
+  lcd_.setCursor(col, row);
 }
 void RadarContext::lcd_print(const char *str) {
   lcd_.print(str);
 }
 
+void RadarContext::lcd_print(int n) {
+  lcd_.print(n);
+}
 uint32_t RadarContext::get_timer() const {
   return timer_;
 }
 void RadarContext::set_timer() {
   timer_ = ArduinoInterface::millis();
+}
+uint32_t RadarContext::execute_current_entry() {
+  return queue_.execute_current_entry();
+}
+void RadarContext::init() {
+  ArduinoInterface::pinMode(CFG::ir_pin, INPUT);
+  radar_.init(CFG::trigger_pin, CFG::echo_pin, CFG::servo_pin);
+  lcd_.begin(16,2);
 }
 
 /* * * * * * * *
@@ -177,12 +202,6 @@ void RadarContext::set_timer() {
 
 void RadarState::change_state(RadarContext *c, RadarState *state) {
   c->change_state(state);
-}
-void RadarState::radar_move(RadarContext *c) {
-  c->radar_move();
-}
-uint32_t RadarState::radar_ping(RadarContext *c) {
-  return c->radar_ping();
 }
 void RadarState::command_add_entry(RadarContext *c,
                                    FunctionObject *func,
@@ -198,11 +217,8 @@ void RadarState::led_set_colour(RadarContext *c, LEDColour colour) {
 void RadarState::led_set_pulse(RadarContext *c, int8_t increment) {
   c->led_set_pulse(increment);
 }
-void RadarState::led_pulse(RadarContext *c) {
-  c->led_pulse();
-}
 void RadarState::lcd_setCursor(RadarContext *c, uint8_t row, uint8_t col) {
-  c->lcd_setCursor(row,col);
+  c->lcd_setCursor(col, row);
 }
 void RadarState::lcd_print(RadarContext *c, const char *str) {
   c->lcd_print(str);
@@ -307,10 +323,12 @@ void WarningState::start(RadarContext *c) {
   led_set_pulse(c, 10);
   led_set_colour(c, LEDColour::RED);
   command_add_entry(c, DoLEDPulse::instance(c), 20);
+  ArduinoInterface::tone(CFG::buzzer_pin, 500);
 }
 
 void WarningState::update(RadarContext *c, uint32_t distance) {
   if (distance > 800) {
     change_state(c, SensingState::instance());
+    ArduinoInterface::noTone(CFG::buzzer_pin);
   }
 }
