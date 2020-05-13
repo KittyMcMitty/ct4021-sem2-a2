@@ -125,11 +125,5 @@ TEST_F(RadarTest, PingTest) {
   EXPECT_CALL(mock_arduino_class_, digitalWrite(trigger_, LOW))
       .InSequence(s1);
 
-  EXPECT_CALL(mock_arduino_class_, noInterrupts())
-      .Times(1);
-
-  EXPECT_CALL(mock_arduino_class_, interrupts())
-      .Times(1);
-
   radar_.ping();
 }

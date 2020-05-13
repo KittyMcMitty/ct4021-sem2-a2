@@ -99,7 +99,7 @@ TEST_F(CommandQueueTest, TestMultipleAddAndExecute) {
   uint32_t returned_time = 0;
 
   EXPECT_CALL(mock_arduino_, millis())
-      .Times(5);
+      .Times(4);
 
   ON_CALL(mock_arduino_, millis())
       .WillByDefault(Return(millis_time_a));
@@ -117,7 +117,7 @@ TEST_F(CommandQueueTest, TestMultipleAddAndExecute) {
   returned_time = queue_.execute_current_entry();
 
   ASSERT_EQ(a_result, true);
-  ASSERT_EQ(returned_time, millis_time_c + frequency_a_);
+  ASSERT_EQ(returned_time, millis_time_b + frequency_b_);
 
   returned_time = queue_.execute_current_entry();
 

@@ -6,21 +6,16 @@
 #define A_TOOLCHAIN_TEST_SRC_RADARSTATE_H_
 
 #ifdef UNIT_TEST
-#include <cstdint>
+#include <RadarStateMocks.h>
 #else
 #include <avr/pgmspace.h>
-#endif
-
-#include <ArduinoInterface.h>
-
-#ifndef UNIT_TEST
 #include <CommandQueue.h>
 #include <LiquidCrystal.h>
 #include <radar.h>
 #include <MyLED.h>
-#else
-#include <RadarStateMocks.h>
-#endif
+#endif // UNIT_TEST
+#include <ArduinoInterface.h>
+
 
 
 
@@ -58,17 +53,18 @@ class RadarContext {
   friend class RadarState;
 
 #ifdef UNIT_TEST
+
   RadarMockInterface radar_;
   CommandQueueMockInterface queue_;
-  MyLEDMockInterface led_ {CFG::red_pin, CFG::green_pin, CFG::blue_pin};
-  LiquidCrystalMockInterface lcd_ {CFG::rs, CFG::en, CFG::d4, CFG::d5, CFG::d6, CFG::d7};
+  MyLEDMockInterface led_;
+  LiquidCrystalMockInterface lcd_;
 #else
   Radar<Servo>  radar_;
   CommandQueue  queue_;
   MyLED         led_ {CFG::red_pin, CFG::green_pin, CFG::blue_pin};
   LiquidCrystal lcd_ {CFG::rs, CFG::en, CFG::d0, CFG::d1, CFG::d2,
                       CFG::d3, CFG::d4, CFG::d5, CFG::d6, CFG::d7};
-#endif
+#endif // UNIT_TEST
   RadarState* state_ {nullptr};
   uint32_t timer_; // track how long since measurement in range
 
@@ -162,5 +158,4 @@ class WarningState : public RadarState {
   void start(RadarContext *c) override;
   void update(RadarContext *c, uint32_t input) override;
 };
-
 #endif //A_TOOLCHAIN_TEST_SRC_RADARSTATE_H_

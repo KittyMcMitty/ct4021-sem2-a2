@@ -119,7 +119,11 @@ class DoPIRCheck : RadarAction {
  */
 
 // Set initial state to standby
-RadarContext::RadarContext() {
+RadarContext::RadarContext() : led_(CFG::red_pin, CFG::green_pin,
+                                    CFG::blue_pin),
+                               lcd_(CFG::rs, CFG::en, CFG::d0, CFG::d1,
+                                    CFG::d2, CFG::d3, CFG::d4, CFG::d5,
+                                    CFG::d6, CFG::d7) {
   change_state(StandbyState::instance());
 }
 

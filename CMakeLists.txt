@@ -53,7 +53,7 @@ add_executable(unit_tests
         include/RadarStateMocks.h
         include/FunctionObject.h)
 
-target_link_libraries(unit_tests gmock_main gtest MyLED CommandQueue)
+target_link_libraries(unit_tests gmock_main gtest MyLED CommandQueue radar)
 
 include_directories(
         include libraries/Radar libraries/MyLED libraries/LiquidCrystal/src

@@ -26,6 +26,8 @@
 #define PIN_A5   (19)
 #define PIN_A6   (20)
 #define PIN_A7   (21)
+#define noInterrupts()
+#define interrupts()
 
 static const uint8_t A0 = PIN_A0;
 static const uint8_t A1 = PIN_A1;
@@ -58,8 +60,8 @@ class MockArduinoClass{
   MOCK_METHOD(uint32_t, millis, ());
   MOCK_METHOD(uint32_t, micros, ());
   MOCK_METHOD(void, attachInterrupt, (uint8_t, void (*)(), uint8_t));
-  MOCK_METHOD(void, noInterrupts, ());
-  MOCK_METHOD(void, interrupts, ());
+  MOCK_METHOD(void, tone, (uint8_t, uint16_t, uint32_t duration));
+  MOCK_METHOD(void, noTone, (uint8_t));
 };
 
 /*
@@ -104,11 +106,11 @@ struct MockArduino {
   static void attachInterrupt(uint8_t pin, void (*ISR)(), uint8_t mode) {
     mock->attachInterrupt(pin, ISR, mode);
   }
-  static void noInterrupts() {
-    mock->noInterrupts();
+  inline static void tone(uint8_t pin, uint16_t frequency, uint32_t duration = 0) {
+    mock->tone(pin, frequency, duration);
   }
-  static void interrupts() {
-    mock->interrupts();
+  inline static void noTone(uint8_t pin) {
+    mock->noTone(pin);
   }
 };
 
@@ -180,6 +182,7 @@ class ArduinoInterface {
 #else
   using AI = ConcreteArduino;
 #endif // UNIT_TEST
+
   inline static void pinMode(uint8_t pin, uint8_t mode) {
     AI::pinMode(pin, mode);
   }
