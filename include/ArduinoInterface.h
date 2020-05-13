@@ -8,6 +8,9 @@
 #ifdef UNIT_TEST
 #include "gmock/gmock.h"
 
+// make things virtual for test
+#define TEST_VIRTUAL virtual
+
 // Constants copies from Arduino.h
 #define HIGH 0x1
 #define LOW  0x0
@@ -117,6 +120,8 @@ struct MockArduino {
 #else
 #include <Arduino.h>
 #include <new.h>
+
+#define TEST_VIRTUAL
 
 /*
  * ConcreteArduino
