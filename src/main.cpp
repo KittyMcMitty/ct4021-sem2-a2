@@ -1,19 +1,18 @@
 #ifndef UNIT_TEST // Don't run this file in test scenario
 
-#include "ArduinoInterface.h"
+#include <ArduinoInterface.h>
 #include <RadarState.h>
 #include <LiquidCrystal.h>
 
-RadarContext context;
-
-uint32_t current_time;
+RadarContext* context;
 
 //LiquidCrystal lcd {CFG::rs, CFG::en, CFG::d0, CFG::d1, CFG::d2,
 //                    CFG::d3, CFG::d4, CFG::d5, CFG::d6, CFG::d7};
 
 void setup() {
   Serial.begin(9600);
-  context.init();
+  context = new RadarContext;
+  context->init();
   //ArduinoInterface::pinMode(11, INPUT);
   //lcd.begin(16,2);
 }
@@ -33,15 +32,15 @@ void loop() { /*
 
 uint32_t delay_time {0}, next_time {0};
 
-  current_time = millis();
-  next_time = context.execute_current_entry();
-  current_time = millis();
+  uint32_t current_time = millis();
+  next_time = context->execute_current_entry();
+  volatile uint32_t execution_time = millis() - current_time;
 
-  delay_time = next_time - current_time;
+  next_time -= (current_time < next_time) ? current_time : next_time;
 
 
 
-  delay(delay_time);
+  delay(next_time);
 }
 
 
