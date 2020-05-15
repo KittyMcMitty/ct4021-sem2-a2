@@ -102,7 +102,7 @@ uint32_t Radar<ServoInterface>::ping() {
   // we're reading two multibyte values, so turn off interrupts
   // we're doing this at the start because when we pulse the trigger right after
   // there will definitely be an interrupt shortly afterwards
-  uint32_t distance = 0;
+  uint32_t distance = UINT32_MAX;
   noInterrupts();
   // if we have times for both of these
   if ((pulse_start_ && pulse_end_) != 0){
@@ -110,7 +110,7 @@ uint32_t Radar<ServoInterface>::ping() {
     if (pulse_end_ < pulse_start_) {
       distance = UINT32_MAX - pulse_start_ + pulse_end_ * SPEED_OF_SOUND / 2;
     } else if (pulse_end_ - pulse_start_ == 38){ // this is if the sensor detects nothing
-      distance = 0;
+      distance = UINT32_MAX;
     } else {
       distance = (pulse_end_ - pulse_start_) * SPEED_OF_SOUND / 2;
     }
