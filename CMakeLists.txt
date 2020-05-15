@@ -2,8 +2,9 @@ cmake_minimum_required(VERSION 3.15)
 project(a_toolchain_test CXX)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Og -Wall")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O2 -Wall")
 
 # Radar is just a template header so no build target to link against
@@ -40,7 +41,8 @@ add_executable(a_toolchain_test
         src/new.cc
         src/RadarState.cc
         include/RadarState.h
-        include/FunctionObject.h)
+        include/Commands.h
+        src/Commands.cc)
 
 add_executable(unit_tests
         tests/test_radar.cc
@@ -50,8 +52,15 @@ add_executable(unit_tests
         tests/test_radar_context.cc
         src/RadarState.cc
         include/RadarState.h
-        include/RadarStateMocks.h
-        include/FunctionObject.h)
+        include/Commands.h
+        src/Commands.cc
+        tests/test_commands.cc
+        tests/mocks/MockRadarContext.cc
+        tests/mocks/MockMyLED.cc
+        tests/mocks/MockRadar.cc
+        tests/mocks/MockArduino.cc
+        tests/mocks/MockCommandQueue.cc
+        tests/mocks/MockLiquidCrystal.cc)
 
 target_link_libraries(unit_tests gmock_main gtest MyLED CommandQueue radar)
 
@@ -77,7 +86,6 @@ if(U_UPLOAD)
     target_link_arduino_libraries(a_toolchain_test PRIVATE Radar)
 
     target_enable_arduino_upload(a_toolchain_test)
-
 endif()
 
 if(UNIT_TEST)
