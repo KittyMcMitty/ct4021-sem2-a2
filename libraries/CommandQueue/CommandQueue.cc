@@ -4,7 +4,7 @@
 
 
 #include <ArduinoInterface.h>
-#include "CommandQueue.h"
+#include <CommandQueue.h>
 
 // TODO: Concept - use a linked list to store a collection of function pointers
 // TODO: Rename this class CommandQueue. New concept is that class will execute
@@ -132,6 +132,12 @@ void CommandQueue::update_current_command_() {
   }
 }
 
+
+void CommandQueue::clear_queue() {
+  for (auto entry : queue_) {
+    remove_entry(entry->function_);
+  }
+}
 
 /*
  * == Operator

@@ -8,6 +8,7 @@
 #include <ArduinoInterface.h>
 #include <LinkedList.h>
 #include <FunctionObject.h>
+//#include <Commands.h>
 
 /*
  * CommandQueueEntry - an entry for the Command Queue
@@ -67,6 +68,7 @@ class CommandQueue {
 
   void add_entry(FunctionObject* function, uint16_t frequency);
   void remove_entry(FunctionObject* function);
+  void clear_queue();
   uint32_t execute_current_entry();
 
 
