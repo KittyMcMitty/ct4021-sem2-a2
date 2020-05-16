@@ -45,7 +45,7 @@ void DoPing::operator()() {
   context_->update(distance);
 }
 void DoPing::delete_instance() {
-  if (instance_) delete instance_;
+  delete instance_;
   instance_ = nullptr;
 }
 
