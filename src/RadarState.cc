@@ -89,7 +89,8 @@ void RadarContext::init() {
   radar_.init(CFG::trigger_pin, CFG::echo_pin, CFG::servo_pin);
   lcd_.begin(16,2);
   queue_.clear_queue();
-  change_state(StandbyState::instance());
+  auto state = StandbyState::instance();
+  change_state(state);
   start();
 }
 
@@ -142,18 +143,30 @@ void StandbyState::start(RadarContext *c) {
   led_set_colour(c, LEDColour::GREEN);
   led_set_pulse(c, 5);
 
-  command_add_entry(c, DoPIRCheck::instance(c), 250);
-  command_add_entry(c, DoLEDPulse::instance(c), 33);
-  command_add_entry(c, DoMemStats::instance(c), 900);
+  auto command = DoPIRCheck::instance(c);
+    command_add_entry(c, command, 250);
+
+  command = DoLEDPulse::instance(c);
+  command_add_entry(c, command, 33);
+  //command_add_entry(c, DoMemStats::instance(c), 900);
 }
 
 void StandbyState::update(RadarContext *c, uint32_t input) {
   if (input) {
-    command_remove_entry(c, DoPIRCheck::instance(c));
-    command_remove_entry(c, DoLEDPulse::instance(c));
-    change_state(c, SensingState::instance());
+    auto command = DoPIRCheck::instance(c);
+    command_remove_entry(c, command);
+
+    command = DoLEDPulse::instance(c);
+    command_remove_entry(c, command);
+
+    auto state = SensingState::instance();
+    change_state(c, state);
     c->start();
   }
+}
+void StandbyState::delete_instance() {
+  delete instance_;
+  instance_ = nullptr;
 }
 
 /* * * * * * * * *
@@ -168,8 +181,11 @@ RadarState *SensingState::instance() {
 }
 
 void SensingState::start(RadarContext *c) {
-  command_add_entry(c, DoMove::instance(c), 25);
-  command_add_entry(c, DoPing::instance(c), 550);
+  auto command = DoMove::instance(c);
+  command_add_entry(c, command, 25);
+
+  command = DoPing::instance(c);
+  command_add_entry(c, command, 550);
 
 }
 void SensingState::update(RadarContext *c, uint32_t distance) {
@@ -197,18 +213,25 @@ void SensingState::update(RadarContext *c, uint32_t distance) {
 }
 
 void SensingState::change_standby(RadarContext *c) {
-  command_remove_entry(c, DoMove::instance(c));
-  command_remove_entry(c, DoPing::instance(c));
+  auto command = DoMove::instance(c);
+  command_remove_entry(c, command);
 
-  change_state(c, StandbyState::instance());
+  command = DoPing::instance(c);
+  command_remove_entry(c, command);
+
+  auto state = StandbyState::instance();
+  change_state(c, state);
   c->start();
 }
 void SensingState::change_warning(RadarContext *c) {
-
-  change_state(c, WarningState::instance());
+  auto state = WarningState::instance();
+  change_state(c, state);
   c->start();
 }
-
+void SensingState::delete_instance() {
+  delete instance_;
+  instance_ = nullptr;
+}
 
 /* * * * * * * * *
  * WarningState  *
@@ -224,14 +247,24 @@ RadarState *WarningState::instance() {
 void WarningState::start(RadarContext *c) {
   led_set_pulse(c, 5);
   led_set_colour(c, LEDColour::RED);
-  command_add_entry(c, DoLEDPulse::instance(c), 33);
+
+  auto command = DoLEDPulse::instance(c);
+  command_add_entry(c, command, 33);
   ArduinoInterface::tone(CFG::buzzer_pin, 500);
 }
 
 void WarningState::update(RadarContext *c, uint32_t distance) {
   if (distance >= CFG::distance_warning) {
-    change_state(c, SensingState::instance());
-    command_remove_entry(c, DoLEDPulse::instance(c));
     ArduinoInterface::noTone(CFG::buzzer_pin);
+
+    auto command = DoLEDPulse::instance(c);
+    command_remove_entry(c, command);
+
+    auto state = SensingState::instance();
+    change_state(c, state);
   }
+}
+void WarningState::delete_instance() {
+  delete instance_;
+  instance_ = nullptr;
 }

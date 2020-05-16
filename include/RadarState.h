@@ -137,6 +137,7 @@ class StandbyState : public RadarState {
  public:
 
   static RadarState* instance();
+  static void delete_instance();
   void start(RadarContext *c) final;
   void update(RadarContext *c, uint32_t input) final;
 };
@@ -153,6 +154,7 @@ class SensingState : public RadarState {
  public:
 
   static RadarState* instance();
+  static void delete_instance();
   void start(RadarContext *c) final;
   void update(RadarContext *c, uint32_t input) final;
 };
@@ -166,6 +168,7 @@ class WarningState : public RadarState {
  public:
 
   static RadarState* instance();
+  static void delete_instance();
   void start(RadarContext *c) final;
   void update(RadarContext *c, uint32_t input) final;
 };

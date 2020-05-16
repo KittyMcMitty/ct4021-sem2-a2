@@ -255,6 +255,9 @@ class StandbyStateTest : public RadarContextMockDependancies {
   StandbyStateTest() {
    standby_state_ = StandbyState::instance();
   }
+  ~StandbyStateTest() {
+    StandbyState::delete_instance();
+  }
 };
 
 TEST_F(StandbyStateTest, TestStart) {
@@ -293,6 +296,8 @@ TEST_F(StandbyStateTest, TestUpdate) {
       .Times(1);
   EXPECT_CALL(mock_radar_context_, change_state(sensing_state))
       .Times(1);
+  EXPECT_CALL(mock_radar_context_, start())
+      .Times(1);
 
   standby_state_->update(&mock_radar_context_, 1);
 
@@ -310,7 +315,10 @@ class SensingStateTest : public RadarContextMockDependancies {
 
   SensingStateTest() {
     sensing_state_ = SensingState::instance();
+  }
 
+  ~SensingStateTest() {
+    SensingState::delete_instance();
   }
 };
 
@@ -339,6 +347,9 @@ TEST_F(SensingStateTest, TestUpdateRedWarning) {
       .Times(1);
 
   EXPECT_CALL(mock_radar_context_, change_state(WarningState::instance()))
+      .Times(1);
+
+  EXPECT_CALL(mock_radar_context_, start())
       .Times(1);
 
   sensing_state_->update(&mock_radar_context_, distance_warning);
@@ -415,6 +426,9 @@ TEST_F(SensingStateTest, TestUpdateGreenStandby) {
   EXPECT_CALL(mock_radar_context_, change_state(_))
       .Times(1);
 
+  EXPECT_CALL(mock_radar_context_, start())
+      .Times(1);
+
   sensing_state_->update(&mock_radar_context_, distance_green);
 }
 
@@ -430,7 +444,10 @@ class WarningStateTest : public RadarContextMockDependancies {
 
   WarningStateTest() {
     warning_state_ = WarningState::instance();
+  }
 
+  ~WarningStateTest() {
+    WarningState::delete_instance();
   }
 };
 
