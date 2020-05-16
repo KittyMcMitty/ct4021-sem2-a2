@@ -105,7 +105,7 @@ uint32_t Radar<ServoInterface>::ping() {
   uint32_t distance = UINT32_MAX;
   noInterrupts();
   // if we have times for both of these
-  if ((pulse_start_ && pulse_end_) != 0){
+  if ((pulse_start_ || pulse_end_) != 0){
     // micros() rolls over every 70mins roughly, so check for that
     if (pulse_end_ < pulse_start_) {
       distance = UINT32_MAX - pulse_start_ + pulse_end_ * SPEED_OF_SOUND / 2;
@@ -136,7 +136,6 @@ inline void Radar<ServoInterface>::attach_echo_isr_() {
   using namespace EchoISR;
   using AI = ArduinoInterface;
   AI::attachInterrupt(digitalPinToInterrupt(echo_pin_), echo_isr, CHANGE);
-  EchoISR::i_flag = true;
 }
 
 /*

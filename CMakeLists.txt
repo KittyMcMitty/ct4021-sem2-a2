@@ -4,7 +4,7 @@ project(a_toolchain_test CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall --coverage")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O2 -Wall")
 
 # Radar is just a template header so no build target to link against
@@ -67,8 +67,8 @@ target_link_libraries(unit_tests gmock_main gtest MyLED CommandQueue radar)
 include_directories(
         include libraries/Radar libraries/MyLED libraries/LiquidCrystal/src
         libraries/LinkedList libraries/CommandQueue
-        cmake-build-debug/_deps/googletest-src/googlemock/include
-        cmake-build-debug/_deps/googletest-src/googletest/include
+        cmake-build-debug-unit_test/_deps/googletest-src/googlemock/include
+        cmake-build-debug-unit_test/_deps/googletest-src/googletest/include
 )
 
 
@@ -93,7 +93,7 @@ if(UNIT_TEST)
     FetchContent_Declare(
             googletest
             GIT_REPOSITORY https://github.com/google/googletest.git
-            GIT_TAG        release-1.10.0
+            # GIT_TAG        release-1.10.0
     )
     FetchContent_MakeAvailable(googletest)
 

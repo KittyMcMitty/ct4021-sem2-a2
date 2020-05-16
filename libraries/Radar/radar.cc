@@ -7,13 +7,10 @@ namespace EchoISR {
 
 volatile uint32_t pulse_start_  {0};
 volatile uint32_t pulse_end_    {0};
-volatile bool i_flag {false};
 uint8_t echo_pin_               {0};  // echo pin for sensor
 
 void echo_isr() {
   using AI = ArduinoInterface;
-
-  i_flag = true;
 
   // if the pin is set high
   if (AI::digitalRead(echo_pin_) == HIGH) {

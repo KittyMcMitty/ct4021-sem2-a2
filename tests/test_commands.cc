@@ -26,6 +26,8 @@ TEST_F(CommandsTest, DoMoveTest) {
       .Times(1);
 
   (*command)();
+
+  DoMove::delete_instance();
 }
 
 TEST_F(CommandsTest, DoPingTest) {
@@ -56,6 +58,8 @@ TEST_F(CommandsTest, DoPingTest) {
 
 
   (*command)();
+
+  DoPing::delete_instance();
 }
 
 // check PIR sensor returns LOW and state does not change
@@ -78,6 +82,8 @@ TEST_F(CommandsTest, DoPIRCheckNull) {
       .WillRepeatedly(Return(LOW));
 
   (*command)();
+
+  DoPing::delete_instance();
 }
 
 // Check PIR sensor returns HIGH and state changes
@@ -100,6 +106,8 @@ TEST_F(CommandsTest, DoPIRCheck) {
       .WillRepeatedly(Return(HIGH));
 
   (*command)();
+
+  DoPIRCheck::delete_instance();
 }
 
 /*

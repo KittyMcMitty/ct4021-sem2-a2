@@ -100,7 +100,6 @@ TEST_F(RadarTest, MoveTest) {
 TEST_F(RadarTest, PingTest) {
   using ::testing::Sequence;
   using ::testing::_;
-  using ::testing::Return;
 
   // All calls must be in sequence.
   Sequence s1;
@@ -126,4 +125,121 @@ TEST_F(RadarTest, PingTest) {
       .InSequence(s1);
 
   radar_.ping();
+}
+
+/*
+ * Test ping when pulse start is before pulse end
+ */
+TEST_F(RadarTest, PingEchoTest) {
+  using testing::_;
+  using namespace EchoISR;
+
+  // ping() will reset the echo_isr values to 0, so dont set directly
+  uint32_t start = 500, end = 1200;;
+
+  pulse_start_ = start;
+  pulse_end_ = end;
+  uint32_t distance = 0;
+
+  EXPECT_CALL(mock_arduino_class_, digitalWrite(_,_))
+      .Times(3);
+  EXPECT_CALL(mock_arduino_class_, delayMicroseconds(_))
+      .Times(2);
+
+  distance = radar_.ping();
+
+  // reset globals!
+
+  uint32_t expected_value = (end - start) * SPEED_OF_SOUND / 2;
+
+  ASSERT_EQ(distance, expected_value);
+
+  // make sure these were set back to 0
+  ASSERT_EQ(pulse_start_, 0);
+  ASSERT_EQ(pulse_end_, 0);
+}
+
+/*
+ * Test ping when pulse start is after pulse end
+ */
+TEST_F(RadarTest, PingEchoRolloverTest) {
+  using testing::_;
+  using namespace EchoISR;
+
+  // ping() will reset the echo_isr values to 0, so dont set directly
+  uint32_t start = UINT32_MAX - 500, end = 200;;
+
+  pulse_start_ = start;
+  pulse_end_ = end;
+  uint32_t distance = 0;
+
+  EXPECT_CALL(mock_arduino_class_, digitalWrite(_,_))
+      .Times(3);
+  EXPECT_CALL(mock_arduino_class_, delayMicroseconds(_))
+      .Times(2);
+
+  distance = radar_.ping();
+
+  // reset globals!
+
+  uint32_t expected_value = UINT32_MAX - start + end * SPEED_OF_SOUND / 2;
+
+  ASSERT_EQ(distance, expected_value);
+
+  // make sure these were set back to 0
+  ASSERT_EQ(pulse_start_, 0);
+  ASSERT_EQ(pulse_end_, 0);
+}
+
+/*
+ * Test ping when pulse end less pulse start is 38 - the sensor will do this
+ * when nothing is in range.
+ */
+TEST_F(RadarTest, PingEchoNothingTest) {
+  using testing::_;
+  using namespace EchoISR;
+
+  pulse_start_ = 0;
+  pulse_end_ = 38;
+  uint32_t distance = 0;
+
+  EXPECT_CALL(mock_arduino_class_, digitalWrite(_,_))
+      .Times(3);
+  EXPECT_CALL(mock_arduino_class_, delayMicroseconds(_))
+      .Times(2);
+
+  distance = radar_.ping();
+
+  // this should just return UINT32_MAX
+  uint32_t expected = UINT32_MAX;
+  ASSERT_EQ(distance, expected);
+
+  // make sure these were set back to 0
+  ASSERT_EQ(pulse_start_, 0);
+  ASSERT_EQ(pulse_end_, 0);
+}
+
+TEST_F(RadarTest, TestEchoISR) {
+  using testing::ReturnRoundRobin;
+  using namespace EchoISR;
+
+  uint32_t start = 500, end = 1000;
+
+  EXPECT_CALL(mock_arduino_class_, micros())
+      .Times(2)
+      .WillRepeatedly(ReturnRoundRobin({start, end}));
+
+  EXPECT_CALL(mock_arduino_class_, digitalRead(echo_pin_))
+      .Times(2)
+      .WillRepeatedly(ReturnRoundRobin({HIGH, LOW}));
+
+  echo_isr();
+  echo_isr();
+
+  ASSERT_EQ(pulse_start_, start);
+  ASSERT_EQ(pulse_end_, end);
+
+  // set these back to 0
+  EchoISR::pulse_start_ = 0;
+  EchoISR::pulse_end_ = 0;
 }

@@ -6,7 +6,7 @@
 #define A_TOOLCHAIN_TEST_INCLUDE_ARDUINOINTERFACE_H_
 
 #ifdef UNIT_TEST
-#include "gmock/gmock.h"
+#include <gmock/gmock.h>
 #include <test/MockArduino.h>
 // make things virtual for test
 #define TEST_VIRTUAL virtual
