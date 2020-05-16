@@ -24,8 +24,10 @@ class RadarContextMockDependancies : public ::testing::Test {
   MockArduinoClass mock_arduino_interface_;
 
   // The concrete states use these distance measures.
-  uint32_t  distance_warning {0}, distance_red {1000},
-            distance_yellow {1750}, distance_green {2500};
+  uint32_t  distance_warning {CFG::distance_warning-1},
+            distance_red {CFG::distance_red-1},
+            distance_yellow {CFG::distance_yellow-1},
+            distance_green {CFG::distance_green};
 
   RadarContextMockDependancies() {
     MyLEDMockInterface::mock_led_ = &mock_my_led_;
@@ -128,6 +130,7 @@ TEST_F(RadarContextTest, TestChangeState) {
       .Times(1);
 
   change_state(&second_mock_state);
+  radar_context_.start();
 }
 
 TEST_F(RadarContextTest, TestStart) {
