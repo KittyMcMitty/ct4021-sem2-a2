@@ -113,7 +113,6 @@ class RadarState {
                                 uint16_t frequency);
   static void command_remove_entry(RadarContext *c, FunctionObject *func);
   static void led_set_colour(RadarContext* c, LEDColour colour);
-  static void led_set_colour(RadarContext* c, LEDColour colour);
   static void led_set_pulse(RadarContext* c, int8_t  increment);
   static uint32_t get_timer(RadarContext* c);
   static void set_timer(RadarContext *c);
