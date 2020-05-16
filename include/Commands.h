@@ -15,6 +15,10 @@ class RadarAction : public FunctionObject {
   friend class CommandsTest;
 
   explicit RadarAction();
+  inline static RadarContext* context_;
+
+ public:
+  ~RadarAction() override = default;
 };
 
 // move radar
@@ -28,8 +32,6 @@ class DoMove : public RadarAction {
   static RadarAction* instance(RadarContext* c);
   static void delete_instance();
   void operator()() final;
- protected:
-  inline static RadarContext* context_;
 };
 
 // ping the radar and stick it back into the context
@@ -43,8 +45,7 @@ class DoPing : public RadarAction {
   static RadarAction* instance(RadarContext* c);
   static void delete_instance();
   void operator()() final;
- protected:
-  inline static RadarContext* context_;
+
 };
 
 // pulse LED
@@ -58,8 +59,6 @@ class DoLEDPulse : public RadarAction {
   static RadarAction* instance(RadarContext* c);
   static void delete_instance();
   void operator()() final;
- protected:
-  inline static RadarContext* context_;
 };
 
 
@@ -74,10 +73,9 @@ class DoPIRCheck : RadarAction {
   static RadarAction* instance(RadarContext* c);
   static void delete_instance();
   void operator()() final;
- protected:
-  inline static RadarContext* context_;
-};
 
+};
+/*
 class DoMemStats : RadarAction {
  private:
   inline static RadarAction* instance_ {nullptr};
@@ -88,8 +86,6 @@ class DoMemStats : RadarAction {
   static RadarAction* instance(RadarContext* c);
   static void delete_instance();
   void operator()() final;
- protected:
-  inline static RadarContext* context_;
 };
-
+*/
 #endif //A_TOOLCHAIN_TEST_INCLUDE_COMMANDS_H_

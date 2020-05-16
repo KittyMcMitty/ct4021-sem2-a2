@@ -9,6 +9,13 @@
  class CommandsTest : public ::testing::Test {
   protected:
   MockRadarContext mock_radar_context_;
+
+  CommandsTest() {
+    RadarAction::context_ = &mock_radar_context_;
+  }
+  ~CommandsTest() {
+    RadarAction::context_ = nullptr;
+  }
 };
 
 TEST_F(CommandsTest, DoMoveTest) {
@@ -39,7 +46,7 @@ TEST_F(CommandsTest, DoPingTest) {
       .Times(1);
 
   EXPECT_CALL(mock_radar_context_, lcd_print(Matcher<const char *>(_)))
-      .Times(1);
+      .Times(2);
 
   EXPECT_CALL(mock_radar_context_, lcd_print(r_value))
       .Times(1);
@@ -47,16 +54,6 @@ TEST_F(CommandsTest, DoPingTest) {
   EXPECT_CALL(mock_radar_context_, update(r_value))
       .Times(1);
 
-
-  (*command)();
-}
-
-TEST_F(CommandsTest, DoLEDPulseTest) {
-
-  auto command = DoLEDPulse::instance(&mock_radar_context_);
-
-  EXPECT_CALL(mock_radar_context_, led_pulse())
-      .Times(1);
 
   (*command)();
 }
@@ -104,3 +101,15 @@ TEST_F(CommandsTest, DoPIRCheck) {
 
   (*command)();
 }
+
+/*
+TEST_F(CommandsTest, DoLEDPulseTest) {
+
+  auto command = DoLEDPulse::instance(&mock_radar_context_);
+
+  EXPECT_CALL(mock_radar_context_, led_pulse())
+      .Times(1);
+
+  (*command)();
+}
+*/

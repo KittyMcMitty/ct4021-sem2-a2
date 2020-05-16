@@ -92,7 +92,7 @@ void DoPIRCheck::delete_instance() {
   delete tmp;
   instance_ = nullptr;
 }
-
+/*
 RadarAction *DoMemStats::instance(RadarContext *c) {
   if (instance_== nullptr) {
     instance_ = new DoMemStats;
@@ -114,3 +114,4 @@ void DoMemStats::operator()() {
   context_->lcd_print("M:");
   context_->lcd_print(max_alloc);
 }
+*/
