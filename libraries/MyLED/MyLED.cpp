@@ -4,13 +4,10 @@
 
 #include <MyLED.h>
 
-MyLED::MyLED(uint8_t red_pin, uint8_t green_pin, uint8_t blue_pin) {
+MyLED::MyLED(uint8_t red_pin, uint8_t green_pin, uint8_t blue_pin) :
+        red_pin_{red_pin}, green_pin_{green_pin}, blue_pin_{blue_pin} {
 
   using AI = ArduinoInterface;
-  // save pins
-  red_pin_ = red_pin;
-  green_pin_ = green_pin;
-  blue_pin_ = blue_pin;
 
   // Set the pins for output
   AI::pinMode(red_pin_, OUTPUT);
@@ -25,6 +22,7 @@ void MyLED::set_colour(LEDColour led_colour) {
   // only do this if colour is changing
   if (led_colour_ != led_colour) {
     led_colour_ = led_colour; // save colour
+    brightness_ = UINT8_MAX; // set brightness to max
 
     // Red
     if (led_colour == LEDColour::RED) {

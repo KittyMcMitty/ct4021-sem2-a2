@@ -24,6 +24,8 @@ class RadarTest : public ::testing::Test {
   const static uint8_t echo_ {0};
   const static uint8_t servo_ {0};
 
+  uint zero {0};
+
   // Mock fixtures
   MockServo mock_servo_;
   MockArduinoClass mock_arduino_class_;
@@ -154,9 +156,11 @@ TEST_F(RadarTest, PingEchoTest) {
 
   ASSERT_EQ(distance, expected_value);
 
+
+
   // make sure these were set back to 0
-  ASSERT_EQ(pulse_start_, 0);
-  ASSERT_EQ(pulse_end_, 0);
+  ASSERT_EQ(pulse_start_, zero);
+  ASSERT_EQ(pulse_end_, zero);
 }
 
 /*
@@ -187,8 +191,8 @@ TEST_F(RadarTest, PingEchoRolloverTest) {
   ASSERT_EQ(distance, expected_value);
 
   // make sure these were set back to 0
-  ASSERT_EQ(pulse_start_, 0);
-  ASSERT_EQ(pulse_end_, 0);
+  ASSERT_EQ(pulse_start_, zero);
+  ASSERT_EQ(pulse_end_, zero);
 }
 
 /*
@@ -215,8 +219,8 @@ TEST_F(RadarTest, PingEchoNothingTest) {
   ASSERT_EQ(distance, expected);
 
   // make sure these were set back to 0
-  ASSERT_EQ(pulse_start_, 0);
-  ASSERT_EQ(pulse_end_, 0);
+  ASSERT_EQ(pulse_start_, zero);
+  ASSERT_EQ(pulse_end_, zero);
 }
 
 TEST_F(RadarTest, TestEchoISR) {

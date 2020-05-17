@@ -151,8 +151,9 @@ TEST_F(CommandQueueTest, TestClearQueue) {
   queue_.clear_queue();
 
   uint32_t time = queue_.execute_current_entry();
+  uint32_t zero {0}; // if we stick 0 into the ASSERT below, it will be signed
 
-  ASSERT_EQ(time, 0);
+  ASSERT_EQ(time, zero);
 }
 
 // CommandQueueEntry comparison tests

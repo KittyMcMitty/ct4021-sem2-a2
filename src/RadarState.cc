@@ -141,6 +141,8 @@ void StandbyState::start(RadarContext *c) {
   led_set_colour(c, LEDColour::GREEN);
   led_set_pulse(c, 5);
   c->lcd_clear();
+  c->lcd_setCursor(0,0);
+  c->lcd_print("Standby");
 
   auto command = DoPIRCheck::instance(c);
   command_add_entry(c, command, 250);
@@ -158,6 +160,7 @@ void StandbyState::update(RadarContext *c, uint32_t input) {
     command_remove_entry(c, command);
 
     auto state = SensingState::instance();
+    c->lcd_clear();
     change_state(c, state);
     c->start();
   }
@@ -203,8 +206,9 @@ void SensingState::update(RadarContext *c, uint32_t distance) {
     led_set_colour(c, LEDColour::GREEN);
 
     uint32_t time = ArduinoInterface::millis();
+    uint32_t last_time = get_timer(c);
     // if more than 30s have passed
-    if (time - get_timer(c) >= standby_timeout) {
+    if (time - last_time >= standby_timeout) {
       change_standby(c);
     }
   }
@@ -243,11 +247,11 @@ RadarState *WarningState::instance() {
 }
 
 void WarningState::start(RadarContext *c) {
-  led_set_pulse(c, 5);
+  led_set_pulse(c, 12);
   led_set_colour(c, LEDColour::RED);
 
   auto command = DoLEDPulse::instance(c);
-  command_add_entry(c, command, 33);
+  command_add_entry(c, command, 10);
   ArduinoInterface::tone(CFG::buzzer_pin, 500);
 }
 

@@ -34,15 +34,6 @@ void CommandQueue::add_entry(FunctionObject* function, uint16_t frequency) {
   command.frequency_ = frequency;
 
   command.last_call_ = AI::millis();
-  /*
-  // prevent underflow
-  uint32_t time = AI::millis();
-  if (time > frequency) {
-    command.last_call_ = time - frequency; // makes it due to be called
-  } else {
-    command.last_call_ = 0;
-  } */
-
 
   queue_.insert(command);
 }
@@ -98,11 +89,7 @@ uint32_t CommandQueue::execute_current_entry() {
 
     // get the next command ready for next time we are called
     update_current_command_();
-    /*
-    if (current_time >= (current_command->last_call_ + (uint32_t)current_command->frequency_)) {
-      execute_current_entry();
-    }
-*/
+
     // last_call_ + frequency_ is the time the command should be called next
     return current_command->last_call_ + (uint32_t)current_command->frequency_;
   } else {

@@ -286,6 +286,12 @@ TEST_F(StandbyStateTest, TestStart) {
       led_command_, _))
       .Times(1);
 
+  EXPECT_CALL(mock_radar_context_, lcd_print("Standby"))
+      .Times(1);
+
+  EXPECT_CALL(mock_radar_context_, lcd_setCursor(0,0))
+      .Times(1);
+
   standby_state_->start(&mock_radar_context_);
 
 }

@@ -27,8 +27,7 @@ class CommandQueueEntry {
   friend class CommandQueue;
 
  private:
-  FunctionObject* function_;
-  //void (*function_)() {nullptr};  // function to be called
+  FunctionObject* function_ {nullptr};
   uint32_t  last_call_ {UINT32_MAX};       // time last called as returned by millis()
   uint16_t  frequency_ {UINT16_MAX};        // how many ms desired between calls
 
