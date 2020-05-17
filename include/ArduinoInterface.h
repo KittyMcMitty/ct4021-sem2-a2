@@ -94,8 +94,7 @@ struct MockArduino {
 
 #else
 #include <Arduino.h>
-//#include <new.h>
-#include <Arduino/new.h>
+#include <new.h>
 
 #define TEST_VIRTUAL
 

@@ -83,14 +83,9 @@ class RadarContextTest : public RadarContextMockDependancies {
  * This is used in the command queue tests
  */
 class TestFuncObj : public FunctionObject {
-  friend class RadarContextTest;
-  private:
-  bool flag {false};
 
  public:
-  void operator()() final {
-    flag = true;
-  }
+  void operator()() final {}
 };
 
 /*
@@ -121,6 +116,8 @@ TEST_F(RadarContextTest, TestInit) {
   EXPECT_CALL(mock_my_led_, set_pulse(_));
 
   radar_context_.init();
+
+  DoLEDPulse::delete_instance();
 }
 
 TEST_F(RadarContextTest, TestChangeState) {
@@ -251,12 +248,20 @@ class StandbyStateTest : public RadarContextMockDependancies {
 
   RadarState* standby_state_;
   MockRadarContext mock_radar_context_;
+  RadarAction* pir_command_;
+  RadarAction* led_command_;
 
   StandbyStateTest() {
    standby_state_ = StandbyState::instance();
+
+    pir_command_ = DoPIRCheck::instance(&mock_radar_context_);
+    led_command_ = DoLEDPulse::instance(&mock_radar_context_);
   }
   ~StandbyStateTest() {
     StandbyState::delete_instance();
+
+    DoPIRCheck::delete_instance();
+    DoLEDPulse::delete_instance();
   }
 };
 
@@ -273,12 +278,12 @@ TEST_F(StandbyStateTest, TestStart) {
 
   // Is the PIR sensor check function added? Frequency not important
   EXPECT_CALL(mock_radar_context_, command_add_entry(
-          DoPIRCheck::instance(&mock_radar_context_), _))
+      pir_command_, _))
       .Times(1);
 
   // Is the DoPulse function added? Frequency not important
   EXPECT_CALL(mock_radar_context_, command_add_entry(
-          DoLEDPulse::instance(&mock_radar_context_), _))
+      led_command_, _))
       .Times(1);
 
   standby_state_->start(&mock_radar_context_);
@@ -289,10 +294,10 @@ TEST_F(StandbyStateTest, TestUpdate) {
   RadarState* sensing_state = SensingState::instance();
 
   EXPECT_CALL(mock_radar_context_, command_remove_entry(
-          DoPIRCheck::instance(&mock_radar_context_)))
+      pir_command_))
       .Times(1);
   EXPECT_CALL(mock_radar_context_, command_remove_entry(
-          DoLEDPulse::instance(&mock_radar_context_)))
+      led_command_))
       .Times(1);
   EXPECT_CALL(mock_radar_context_, change_state(sensing_state))
       .Times(1);
@@ -312,13 +317,19 @@ class SensingStateTest : public RadarContextMockDependancies {
 
   RadarState* sensing_state_;
   MockRadarContext mock_radar_context_;
+  RadarAction* move_command_;
+  RadarAction* ping_command_;
 
   SensingStateTest() {
     sensing_state_ = SensingState::instance();
+    move_command_ = DoMove::instance(&mock_radar_context_);
+    ping_command_ = DoPing::instance(&mock_radar_context_);
   }
 
   ~SensingStateTest() {
     SensingState::delete_instance();
+    DoMove::delete_instance();
+    DoPing::delete_instance();
   }
 };
 
@@ -328,31 +339,36 @@ TEST_F(SensingStateTest, TestStart) {
 
   // Does DoMove get added?
   EXPECT_CALL(mock_radar_context_, command_add_entry(
-          DoMove::instance(&mock_radar_context_), _))
+      move_command_, _))
       .Times(1);
 
   // Does ping get added? Is the frequency >= 500?
   EXPECT_CALL(mock_radar_context_, command_add_entry(
-          DoPing::instance(&mock_radar_context_), Ge(500)))
+      ping_command_, Ge(500)))
       .Times(1);
 
   sensing_state_->start(&mock_radar_context_);
 }
 
 TEST_F(SensingStateTest, TestUpdateRedWarning) {
+
+  auto warning_state = WarningState::instance();
+
   EXPECT_CALL(mock_radar_context_, set_timer())
       .Times(1);
 
   EXPECT_CALL(mock_radar_context_, led_set_colour(LEDColour::RED))
       .Times(1);
 
-  EXPECT_CALL(mock_radar_context_, change_state(WarningState::instance()))
+  EXPECT_CALL(mock_radar_context_, change_state(warning_state))
       .Times(1);
 
   EXPECT_CALL(mock_radar_context_, start())
       .Times(1);
 
   sensing_state_->update(&mock_radar_context_, distance_warning);
+
+  WarningState::delete_instance();
 }
 
 TEST_F(SensingStateTest, TestUpdateRed) {
@@ -415,11 +431,11 @@ TEST_F(SensingStateTest, TestUpdateGreenStandby) {
       .Times(1);
 
   EXPECT_CALL(mock_radar_context_, command_remove_entry(
-          DoMove::instance(&mock_radar_context_)))
+          move_command_))
       .Times(1);
 
   EXPECT_CALL(mock_radar_context_, command_remove_entry(
-      DoPing::instance(&mock_radar_context_)))
+          ping_command_))
       .Times(1);
 
   // make sure change_state is called
@@ -441,13 +457,16 @@ class WarningStateTest : public RadarContextMockDependancies {
 
   RadarState* warning_state_;
   MockRadarContext mock_radar_context_;
+  RadarAction* led_command_;
 
   WarningStateTest() {
     warning_state_ = WarningState::instance();
+    led_command_ = DoLEDPulse::instance(&mock_radar_context_);
   }
 
   ~WarningStateTest() {
     WarningState::delete_instance();
+    DoLEDPulse::delete_instance();
   }
 };
 
@@ -461,7 +480,7 @@ TEST_F(WarningStateTest, TestStart) {
       .Times(1);
 
   EXPECT_CALL(mock_radar_context_, command_add_entry(
-          DoLEDPulse::instance(&mock_radar_context_), _))
+          led_command_, _))
       .Times(1);
 
   EXPECT_CALL(mock_arduino_interface_, tone(CFG::buzzer_pin, _, _))
@@ -488,7 +507,7 @@ TEST_F(WarningStateTest, TestUpdateSensing) {
       .Times(1);
 
   EXPECT_CALL(mock_radar_context_, command_remove_entry(
-          DoLEDPulse::instance(&mock_radar_context_)))
+          led_command_))
       .Times(1);
 
   EXPECT_CALL(mock_arduino_interface_, noTone(CFG::buzzer_pin))
@@ -496,5 +515,4 @@ TEST_F(WarningStateTest, TestUpdateSensing) {
 
   warning_state_->update(&mock_radar_context_, distance_red);
 
-  delete DoLEDPulse::instance(&mock_radar_context_);
 }

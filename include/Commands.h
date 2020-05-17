@@ -65,7 +65,6 @@ class DoLEDPulse : public RadarAction {
 class DoPIRCheck : RadarAction {
  private:
   inline static RadarAction* instance_ {nullptr};
-  uint32_t count {0};
   explicit DoPIRCheck() = default;
   ~DoPIRCheck() final = default;
 

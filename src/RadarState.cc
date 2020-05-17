@@ -12,18 +12,17 @@
  */
 
 // Set initial state to standby
-RadarContext::RadarContext(RadarState* state) : led_(CFG::red_pin, CFG::green_pin,
-                                    CFG::blue_pin),
-                               lcd_(CFG::rs, CFG::en, CFG::d0, CFG::d1,
+RadarContext::RadarContext(RadarState* state) : led_{CFG::red_pin, CFG::green_pin,
+                                    CFG::blue_pin},
+                               lcd_{CFG::rs, CFG::en, CFG::d0, CFG::d1,
                                     CFG::d2, CFG::d3, CFG::d4, CFG::d5,
-                                    CFG::d6, CFG::d7),
-                               state_(state) {
+                                    CFG::d6, CFG::d7},
+                               state_{state} {
   if (state_ == nullptr) {
     state_ = StandbyState::instance();
   }
 };
 
-// During normal operation, all these state objects will be made.
 RadarContext::~RadarContext() = default;
 
 void RadarContext::change_state(RadarState *state) {
@@ -32,9 +31,6 @@ void RadarContext::change_state(RadarState *state) {
 
 void RadarContext::start() {
   state_->start(this);
-}
-
-void RadarContext::stop() {
 }
 
 void RadarContext::update(uint32_t distance) {
@@ -93,7 +89,9 @@ void RadarContext::init() {
   change_state(state);
   start();
 }
-
+void RadarContext::lcd_clear() {
+  lcd_.clear();
+}
 
 /* * * * * * * *
  * RadarState  *
@@ -142,13 +140,13 @@ RadarState *StandbyState::instance() {
 void StandbyState::start(RadarContext *c) {
   led_set_colour(c, LEDColour::GREEN);
   led_set_pulse(c, 5);
+  c->lcd_clear();
 
   auto command = DoPIRCheck::instance(c);
-    command_add_entry(c, command, 250);
+  command_add_entry(c, command, 250);
 
   command = DoLEDPulse::instance(c);
   command_add_entry(c, command, 33);
-  //command_add_entry(c, DoMemStats::instance(c), 900);
 }
 
 void StandbyState::update(RadarContext *c, uint32_t input) {
@@ -206,7 +204,7 @@ void SensingState::update(RadarContext *c, uint32_t distance) {
 
     uint32_t time = ArduinoInterface::millis();
     // if more than 30s have passed
-    if (time - get_timer(c) >= 10000) {
+    if (time - get_timer(c) >= standby_timeout) {
       change_standby(c);
     }
   }

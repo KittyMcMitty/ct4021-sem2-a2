@@ -22,15 +22,11 @@ TEST_F(LinkedListTest, TestInsertAndDelete) {
     test_list.remove(i);
   }
 
-  bool flag {false};
-
-  // if there is anything in the list, set the flag true
-  for (auto result : test_list) {
-    flag = true;
-  }
+  auto start = test_list.begin();
+  auto end = test_list.end();
 
   // if there was anything in the list, this test fails.
-  ASSERT_FALSE(flag);
+  ASSERT_EQ(start, end);
 }
 
 TEST_F(LinkedListTest, TestIterator) {

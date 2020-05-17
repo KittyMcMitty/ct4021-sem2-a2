@@ -1,3 +1,7 @@
+//
+// Created by Nicholas Ives
+//
+
 // include guard to prevent multiple definition; Stroustrup §15.3.3
 #ifndef RADAR_H
 #define RADAR_H
@@ -43,9 +47,9 @@ template <class ServoInterface>
 class Radar
 {
  private:
-  static const int8_t radar_l_ = -1;  // using constant here instead of macro
-                                      // as per Google style guide
-  static const int8_t radar_r_ = 1;   // https://google.github.io/styleguide/cppguide.html#Preprocessor_Macros
+  static const int8_t radar_l_ = -1;
+
+  static const int8_t radar_r_ = 1;
   int8_t direction_ {radar_l_};       // Radar will track whether servo needs
                                       // to be going left or right
   uint8_t servo_angle_ {90};          // Angle of servo in range 0 <= angle <= 180

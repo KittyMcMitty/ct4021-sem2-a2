@@ -62,6 +62,35 @@ TEST_F(CommandsTest, DoPingTest) {
   DoPing::delete_instance();
 }
 
+TEST_F(CommandsTest, DoPingOutOfRangeTest) {
+  using testing::Return;
+  using testing::_;
+  using testing::Matcher;
+
+  uint32_t r_value {UINT32_MAX};
+
+  auto command = DoPing::instance(&mock_radar_context_);
+
+
+  EXPECT_CALL(mock_radar_context_, radar_ping())
+      .Times(1)
+      .WillRepeatedly(Return(r_value));
+
+  EXPECT_CALL(mock_radar_context_, lcd_setCursor(_,_))
+      .Times(1);
+
+  EXPECT_CALL(mock_radar_context_, lcd_print(Matcher<const char *>(_)))
+      .Times(2);
+
+  EXPECT_CALL(mock_radar_context_, update(r_value))
+      .Times(1);
+
+
+  (*command)();
+
+  DoPing::delete_instance();
+}
+
 // check PIR sensor returns LOW and state does not change
 TEST_F(CommandsTest, DoPIRCheckNull) {
   using testing::_;
@@ -110,7 +139,7 @@ TEST_F(CommandsTest, DoPIRCheck) {
   DoPIRCheck::delete_instance();
 }
 
-/*
+
 TEST_F(CommandsTest, DoLEDPulseTest) {
 
   auto command = DoLEDPulse::instance(&mock_radar_context_);
@@ -120,4 +149,3 @@ TEST_F(CommandsTest, DoLEDPulseTest) {
 
   (*command)();
 }
-*/

@@ -20,14 +20,12 @@ class MockRadarContext  : public RadarContext {
   MOCK_METHOD(uint32_t, get_timer, (),(override, const));
   MOCK_METHOD(void, set_timer, (),(override));
   MOCK_METHOD(void, start, (),(override));
-  MOCK_METHOD(void, init, (),(override));
   MOCK_METHOD(void, radar_move, (),(override));
   MOCK_METHOD(uint32_t, radar_ping, (),(override));
   MOCK_METHOD(void, led_pulse, (),(override));
   MOCK_METHOD(void, lcd_setCursor, (uint8_t, uint8_t),(override));
   MOCK_METHOD(void, lcd_print, (const char *),(override));
   MOCK_METHOD(void, lcd_print, (int n),(override));
-  MOCK_METHOD(uint32_t, execute_current_entry, (),(override));
   MOCK_METHOD(void, update, (uint32_t),(override));
 };
 

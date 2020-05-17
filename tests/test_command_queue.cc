@@ -60,16 +60,6 @@ class CommandQueueTest : public CommandQueueEntryTest {
 };
 
 
-/*
-void function_a() {
-  a_result = true;
-}
-
-void function_b() {
-  b_result = true;
-}
-*/
-
 // CommandQueue tests
 
 TEST_F(CommandQueueTest, TestAddAndExecute) {
@@ -149,6 +139,20 @@ TEST_F(CommandQueueTest, TestAddAndRemove) {
   ASSERT_EQ(a_result, false);
   ASSERT_EQ(b_result, true);
 
+}
+
+TEST_F(CommandQueueTest, TestClearQueue) {
+  EXPECT_CALL(mock_arduino_, millis())
+      .Times(2);
+
+  queue_.add_entry(&function_a, frequency_a_);
+  queue_.add_entry(&function_b, frequency_b_);
+
+  queue_.clear_queue();
+
+  uint32_t time = queue_.execute_current_entry();
+
+  ASSERT_EQ(time, 0);
 }
 
 // CommandQueueEntry comparison tests

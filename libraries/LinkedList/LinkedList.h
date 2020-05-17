@@ -9,7 +9,7 @@
 #include <cstdint>
 #else
 #include <ArduinoInterface.h>
-#include <new.h>
+//#include <new.h>
 #include <stdlib.h>
 #endif // UNIT_TEST
 

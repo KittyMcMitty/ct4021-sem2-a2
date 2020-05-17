@@ -76,12 +76,10 @@ uint32_t CommandQueue::execute_current_entry() {
   // if we don't have a command, get one
   if (current_command == nullptr) {
     update_current_command_();
-  } else if (current_command->function_ == nullptr) {
-    update_current_command_();
   }
 
   // if we have a command, do it and update
-  if (current_command->function_ != nullptr) {
+  if (current_command != nullptr) {
 
     // do the command
     (*current_command->function_)();
