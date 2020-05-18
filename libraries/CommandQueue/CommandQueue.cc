@@ -6,14 +6,6 @@
 #include <ArduinoInterface.h>
 #include <CommandQueue.h>
 
-// TODO: Concept - use a linked list to store a collection of function pointers
-// TODO: Rename this class CommandQueue. New concept is that class will execute
-//  current command, then iterate list to find next command to execute. It will
-//  then sleep until that command. That command will execute on wake, and so on.
-
-// We can't pass around pointers to member functions, so use lambda's here to do
-// the logic? Functoids probably too heavyweight
-
 /*
  * Add Entry - add an entry to the command queue
  *
