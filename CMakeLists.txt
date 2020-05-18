@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
-project(a_toolchain_test CXX)
+project(s1909632-ct4021-a2 CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -34,7 +34,7 @@ add_library(radar
         libraries/Radar/radar.h
 )
 
-add_executable(a_toolchain_test
+add_executable(s1909632-ct4021-a2
         src/main.cpp
         include/ArduinoInterface.h
         include/new.h
@@ -73,19 +73,19 @@ include_directories(
 
 
 
-target_compile_options(a_toolchain_test PUBLIC "$<$<CONFIG:DEBUG>:${DEBUG_OPTIONS}>")
-target_compile_options(a_toolchain_test PUBLIC "$<$<CONFIG:RELEASE>:${RELEASE_OPTIONS}>")
+target_compile_options(s1909632-ct4021-a2 PUBLIC "$<$<CONFIG:DEBUG>:${DEBUG_OPTIONS}>")
+target_compile_options(s1909632-ct4021-a2 PUBLIC "$<$<CONFIG:RELEASE>:${RELEASE_OPTIONS}>")
 
 if(U_UPLOAD)
-    target_link_arduino_libraries(a_toolchain_test PRIVATE core)
-    target_link_arduino_libraries(a_toolchain_test PRIVATE Wire)
-    target_link_arduino_libraries(a_toolchain_test PRIVATE Servo)
-    target_link_arduino_libraries(a_toolchain_test PRIVATE LiquidCrystal)
-    target_link_arduino_libraries(a_toolchain_test PRIVATE MyLED)
-    target_link_arduino_libraries(a_toolchain_test PRIVATE CommandQueue)
-    target_link_arduino_libraries(a_toolchain_test PRIVATE Radar)
+    target_link_arduino_libraries(s1909632-ct4021-a2 PRIVATE core)
+    target_link_arduino_libraries(s1909632-ct4021-a2 PRIVATE Wire)
+    target_link_arduino_libraries(s1909632-ct4021-a2 PRIVATE Servo)
+    target_link_arduino_libraries(s1909632-ct4021-a2 PRIVATE LiquidCrystal)
+    target_link_arduino_libraries(s1909632-ct4021-a2 PRIVATE MyLED)
+    target_link_arduino_libraries(s1909632-ct4021-a2 PRIVATE CommandQueue)
+    target_link_arduino_libraries(s1909632-ct4021-a2 PRIVATE Radar)
 
-    target_enable_arduino_upload(a_toolchain_test)
+    target_enable_arduino_upload(s1909632-ct4021-a2)
 endif()
 
 if(UNIT_TEST)
