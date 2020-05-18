@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall --coverage")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O2 -Wall")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O2 -Wall -static-libstdc++ -static -lpthread ")
 
 # Radar is just a template header so no build target to link against
 # add_library(Radar libraries/Radar/radar.h)
@@ -69,6 +69,8 @@ include_directories(
         libraries/LinkedList libraries/CommandQueue
         cmake-build-debug-unit_test/_deps/googletest-src/googlemock/include
         cmake-build-debug-unit_test/_deps/googletest-src/googletest/include
+        cmake-build-debug/_deps/googletest-src/googlemock/include
+        cmake-build-debug/_deps/googletest-src/googletest/include
 )
 
 

@@ -24,7 +24,7 @@ class RadarTest : public ::testing::Test {
   const static uint8_t echo_ {0};
   const static uint8_t servo_ {0};
 
-  uint zero {0};
+  uint32_t zero {0};
 
   // Mock fixtures
   MockServo mock_servo_;

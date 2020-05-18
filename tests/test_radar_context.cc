@@ -267,6 +267,7 @@ class StandbyStateTest : public RadarContextMockDependancies {
 
 TEST_F(StandbyStateTest, TestStart) {
   using ::testing::_;
+  using testing::Matcher;
 
   // Is the LED set to green?
   EXPECT_CALL(mock_radar_context_, led_set_colour(LEDColour::GREEN))
@@ -286,7 +287,7 @@ TEST_F(StandbyStateTest, TestStart) {
       led_command_, _))
       .Times(1);
 
-  EXPECT_CALL(mock_radar_context_, lcd_print("Standby"))
+  EXPECT_CALL(mock_radar_context_, lcd_print(Matcher<const char *>(_)))
       .Times(1);
 
   EXPECT_CALL(mock_radar_context_, lcd_setCursor(0,0))

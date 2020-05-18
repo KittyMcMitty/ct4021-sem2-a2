@@ -111,7 +111,9 @@ void CommandQueue::update_current_command_() {
 
 
 void CommandQueue::clear_queue() {
-  for (auto entry : queue_) {
+  for (auto iterator = queue_.begin(); iterator != queue_.end();) {
+      auto entry = *iterator;
+      ++iterator;
     remove_entry(entry->function_);
   }
 }
